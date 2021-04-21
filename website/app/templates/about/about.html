@@ -1,0 +1,23 @@
+{% extends "base_about.html" %}
+{% block page_content %}
+<div class="row">
+    {% for project in projects[1] %}
+    {% if project.show==cont %}
+    <div class="col-md-4">
+        <div class="card mb-2">
+            <img class="card-img-top" src="/images/projects/{{ project.image }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ project.title|safe }}</h5>
+                <p class="card-text">{{ project.description|safe }}</p>
+                <a href="/about/{{ project.pk  }}"
+                   class="btn btn-primary" id="bt">
+                    En savoir plus
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
+</html>

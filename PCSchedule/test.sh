@@ -1,0 +1,1 @@
+python "/home/elie/pythonprojects/encyclopedia/assistant.py"

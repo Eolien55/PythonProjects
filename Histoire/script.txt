@@ -1,0 +1,1 @@
+{'1': {'question': "'hey'", 'options': ['ok', 'okk'], 'command': ['self.fichier["Argent"]+=1;print("oof")','1+1'], 'indices': ['1', '1'], 'optionnel': ['True', 'self.fichier["Argent"]==2']}}

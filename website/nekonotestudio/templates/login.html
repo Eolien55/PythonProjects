@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block page_content %}
+<main class="text-center">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <style>
+            #container {
+                background: #ff8080;
+                color:white;
+                font-family: 'Roboto';
+                font-size: 20px;
+                border-radius: 15px;
+                display: none;
+                text-align: center;
+            }
+            main {
+                width:100%;
+                max-width:30%;
+                margin: auto;
+            }
+            a {
+                text-decoration: none;
+                color: #888888;
+            }
+            .sep {
+                margin-top:30px;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            function send() {
+                var username=$('#1').val();
+                var password=$('#2').val();
+                $.post(url='/login/',data={
+                    'email':username,'password':password
+                },datatype="json").done(function(response) {
+                    if (response == 'ERR') {
+                        $("#container").css({"display":"block"});
+                    } else {
+
+                    }
+                });};
+        </script>
+        <div id="container">
+        <div>
+            <p>
+                Nom d'utilisateur ou mot de passe incorrect
+            </p>
+        </div>
+    </div>
+            <input type="text" id="1" placeholder="Adresse e-mail" class="form-control">
+            <input type="password" id="2" placeholder="Mot de passe" class="form-control">
+        <input type="button" value="Valider" onclick="send();" class="w-100 btn btn-lg btn-primary sep">
+    <a href="/signin">
+        Créer un compte ?
+    </a>
+</main>
+{% endblock %}

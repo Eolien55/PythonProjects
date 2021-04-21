@@ -1,0 +1,1 @@
+['poire', 'pomme', 'poireau', 'artichaud', 'patate', 'sucre', 'masque', 'analgésique', 'ordinateur', 'serpent', '']

@@ -1,0 +1,1 @@
+[['17:00:00', 'pass'], ['18:10:00', 'global runOrNot\nif runOrNot:subprocess.run("/home/elie/PCSchedule/test.sh")\nrunOrNot=False'], ['18:30:00', 'pass']]

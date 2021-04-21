@@ -1,0 +1,30 @@
+(0,[
+    {
+        "show":0,"title":"Premier projet", "image":"P1.png","description":"Un scrutin de condorcet avec interface graphique","pk":1,"longdescription":"C'est mon tout premier projet en python ! Je commen\xe7ais par quelque chose de difficile, en attaquant d\xe8s le d\xe9but quelque chose d'aussi difficile qu'un scrutin avec <strong>interface graphique</strong> ! Avec ce projet, j'ai appris les bases, en python !","learned":"Les bases de python, les interfaces graphiques."
+    },{
+        "show":0,"title":"Deuxi\xe8me projet", "image":"P2.png","description":"Un jeu du pendu","pk":2,"longdescription":"C'est mon deuxi&egrave;me projet ! C'est un jeu du pendu en ligne de commande o&ugrave; je peux ajouter des mots ou jouer. Gr&acirc;ce &agrave; ce projet, j'ai beaucoup renforc&eacute; mes acquis en python !","learned":"Les interfaces en ligne de commande, donc l'architecture de la ligne de commande, la manipulation de fichiers, le d&eacute;but des bases de donn&eacute;es."
+    },{
+        "show":0,"title":"Troisi\xe8me projet", "image":"P3.jpg","description":"Un spammeur qui spamme mes spams (aucune utilit\xe9)","pk":3,"longdescription":"Troisi&egrave;me projet ! \(&GreaterFullEqual;&bigtriangledown;&LessFullEqual;)/ Les emails ! Les authentifications ! Le d&eacute;but du HTML ! Bref, tout plein de trucs. Comme vous le voyez dans le titre, le programme... spamme mes spams, ce qui n'a aucun sens, mais je m'en mange les ongles d'orteil.","learned":"""Tout plein de trucs <img src="https://www.meme-arsenal.com/memes/259b9d61824b1f173fae5381b50d0e3f.jpg" style="width: 40px">"""
+    },{
+        "show":0,"title":"Quatri\xe8me projet", "image":"P4.png","description":"Un cr\xe9ateur d'histoire \xe0 choix multiples compl\xe8tes","pk":4,"longdescription":"Projet num&eacute;ro quatre... Sans doute le moins int&eacute;ressant de tous : j'ai appris les classes, les attributs, mais c'est tout. Tu peux utiliser des attributs (ex: argent) avec des conditions pour acc&eacute;der &agrave; des moments qui peuvent modifier les attributs avec plusieurs portes possibles, et une interface en ligne de commande pour cr&eacute;er les &eacute;tats du jeu, mais c'est tout.","learned":"La programmation orient&eacute;e-objet."
+    },{
+        "show":0,"title":"Cinqui\xe8me projet", "image":"P5.jpg","description":"Un assistant personnel","pk":5,"longdescription":"Assez simple &agrave; faire avec le tts et la reconnaissance vocale qui sont dans des modules. Mais : j'ai appris beaucoup, pour ce qui est du HTML et du web-scraping. Il peut : aller sur wikipedia, lancer une vid&eacute;o youtube, faire un scan de l'antivirus, chercher des synonymes ou des d&eacute;finitions, et lancer d'autres programmes.","learned":"Web-scraping et un peu d'HTML."
+    },{
+        "show":0,"title":"Sixi\xe8me projet", "image":"P6.jpg","description":"Un syst\xe8me de classification de dossiers","pk":6,"longdescription":"""Tr&egrave;s simple &agrave; r&eacute;aliser, moins &agrave; imaginer, ce projet me fait gagner un temps consid&eacute;rable dans mon travail scolaire en rangeant les fichiers par ann&eacute;e, puis par mati&egrave;re et enfin par mois. Mon travail est rang&eacute; automatiquement !""","learned":"""La manipulation avanc&eacute;e de fichiers."""
+    },{
+        "show":0,"title":"Septi\xe8me projet", "image":"P7.jpg","description":"Un syst\xe8me faisant ex\xe9cuter \xe0 mon ordinateur certaines t\xe2ches \xe0 certains moments, le tout, tr\xe8s user-friendly","pk":7,"longdescription":"Ce programme est tr&egrave;s simple mais tr&egrave;s utile. Il ex&eacute;cute certaines actions &agrave; certains moments de la journ&eacute;e, comme jouer une musique, ou d&eacute;marrer un autre programme.","learned":"Le module <em>time</em>, la programmation asynchrone."
+    },{
+        "show":0,"title":"Projets en cours", "image":"P8.jpg","description":"Virus pour mettre la musique de GIORNO GIOVANNA","pk":8,"longdescription":"Je suis en train d'essayer de mettre une musique aux hauts-parleurs de mon &eacute;cole... Un peu difficile T^T"
+    },{
+        "show":0,"title":"Projet WEB 1", "image":"P9.png","description":"Ceci","pk":9,"longdescription":[9]
+    },{
+        "show":9,"title":"1","image":"P10.png","description":"Cloud &agrave; sauvegarde automatique","pk":10,"longdescription":"C'est mon premier projet web !!! On peut acc&eacute;der aux fichiers de l'ordinateur depuis n'importe o&ugrave; !!! Avec interface graphique, bien entendu.","learned":"Flask, <strong>HTML</strong>, CSS"
+    },{
+        "show":9,"title":"2","image":"P11.png","description":"Cet endroit","pk":11,"longdescription":"Pas besoin d'expliquer.","learned":"Bootstrap, bases des bases de donn&eacute;es (lol)"
+    },{
+        "show":0,"title":"Projet abandonn\u00e9...","image":"P12.jpg","description":"\u00c7a devait \u00eatre simple... Mais non, je suis pas assez fort en maths pour le faire (triste).","pk":12,"longdescription":"\u00c7a devait \u00eatre simple... Mais non, je suis pas assez fort en maths pour le faire (triste)."
+    },{
+        "show":0,"title":"Meh/20","image":"P13.png","description":"Un truc pour jouer au sudoku, et finir, si on y arrive pas","pk":13,"longdescription":"Ouais, bah g fait un sudoku, c'est simple d'y jouer, il peut se r\u00e9soudre tout seul, etc.","learned":"Algorithmes, back-tracing, PyGame"
+    }
+        ]
+)

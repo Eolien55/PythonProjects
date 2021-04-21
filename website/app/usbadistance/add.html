@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <style>
+    body {
+    background: url('/images/backgroundn0.jpg');
+    background-size:  cover;
+    font-family:Roboto, sans-serif
+    }
+    div {
+        position: absolute;
+        top:0px;
+        right:0px;
+        left:0px;
+        margin: 0 auto;
+        background: url('/images/backgroundn0.jpg');
+        background-size:  cover;
+    }
+    form {
+        position: relative;
+        top: 150px;
+    }
+    </style>
+    <title>Ajouter un fichier</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+    <body>
+    <div>
+    <h1 id="fichier" style="color: #FFFFFF; font-size: 50px;background:transparent;">
+    <a id="previous" href="/%s">
+        <button type="submit" style="background:transparent;color:#FFFFFF;font-size:50px;border:none;">
+            Fichiers /
+        </button>
+    </a>
+        <button type="submit" style="background-color:transparent;border:none;color: #009cd1;font-size:50px;">Ajouter un fichier / </button>
+
+    <hr>
+    </h1>
+    </div>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file style="background:transparent;color:white;">
+      <input type=submit value=Ajouter style="background:transparent;color:white;border:none;">
+    </form>
+    </body>
+    </html>

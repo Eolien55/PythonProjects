@@ -1,0 +1,13 @@
+Ajouter des "built-ins" en utilisant REGEX :
+import re
+
+old = open(the_file,'r')
+data = old.read()
+old.close()
+
+data = re.sub(built, func, data)
+# continue to replace other keywords
+
+new = open(the_file, 'w')
+new.write(data)
+new.close()
