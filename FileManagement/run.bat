@@ -1,1 +1,0 @@
-python "C:\Users\Elie\PythonProjects\FileManagement\run.py"

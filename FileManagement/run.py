@@ -1,12 +1,12 @@
-from main import *
-import time
-import sys
-import os
-import traceback
-import types
-import updateWorkspace
-import updateCommandsImports
 import importlib as im
+import updateCommandsImports
+import updateWorkspace
+import types
+import traceback
+import os
+import sys
+import time
+from main import *
 
 run = ManageFileType()
 val = 0
@@ -27,6 +27,7 @@ while True:
     im.reload(updateWorkspace)
     im.reload(updateCommandsImports)
     if not val % 600:
-        os.system("""notify-send "Vos fichiers ont bien \u00e9t\u00e9 rang\u00e9s" """)
+        os.system(
+            """notify-send "Vos fichiers ont bien \u00e9t\u00e9 rang\u00e9s" """)
     val += 1
     time.sleep(0.5)

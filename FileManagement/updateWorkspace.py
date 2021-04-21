@@ -1,5 +1,5 @@
-import json
 import os
+import json
 
 data = open("/home/elie/pythonprojects/workspace.code-workspace", "r").read()
 data = json.loads(data)

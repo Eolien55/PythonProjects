@@ -1,6 +1,6 @@
-import shutil
-import os
 import time
+import os
+import shutil
 
 
 class ManageFileType:
