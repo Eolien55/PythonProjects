@@ -1,31 +1,36 @@
 import shutil
 import os
-import sys
-import time
-import PIL.Image
-import PIL.ExifTags
 import requests
 import json
 import re
+import PIL.Image
+import PIL.ExifTags
+import hachoir.metadata
+import hachoir.parser
+from sys import argv
 
 
 def get_exif(filename):
-    img = PIL.Image.open(filename)
-    exif = {
-        PIL.ExifTags.TAGS[k]: v
-        for k, v in img._getexif().items()
-        if k in PIL.ExifTags.TAGS
-    }
-    return exif
+    try:
+        img = PIL.Image.open(filename)
+        exif = {
+            PIL.ExifTags.TAGS[k]: v
+            for k, v in img._getexif().items()
+            if k in PIL.ExifTags.TAGS
+        }
+        return exif
+    except:
+        return
 
 
 def lonlat(gps):
     results = []
     for i in ["GPSLongitude", "GPSLatitude"]:
-        ref = gps[i+"Ref"]
+        ref = gps[i + "Ref"]
         val = gps[i]
-        val = (val[0]+(val[1]/60)+(val[2]/3600)) * \
-            [-1, 1][int(ref in ["N", "E"])]
+        val = (val[0] + (val[1] / 60) + (val[2] / 3600)) * (
+            1 if ref in ["N", "E"] else -1
+        )
         val = eval(str(val))
         results.append(val)
     return results
@@ -43,69 +48,106 @@ months = {
     "09": "Septembre",
     "10": "Octobre",
     "11": "Novembre",
-    "12": "D\u00e9cembre"
+    "12": "D\u00e9cembre",
 }
 
-url = "https://maps.googleapis.com/maps/api/geocode/json"
+if len(argv) > 1:
+    file = (argv[1])
+else:
+    file = '.'
 
-for folder, _, files in os.walk("."):
+for folder, _, files in os.walk(file):
     folder = os.path.abspath(folder)
+    print(folder)
     for file in files:
-        format = re.findall(r"\.[A-Za-z0-9_]+$", file)[0]
-        file = folder+"/"+file
-        exif = get_exif(file)
-        DateTime = exif["DateTime"]
-        year = DateTime[:4]
-        month = months[DateTime[5:7]]
-        if "GPSInfo" in exif:
-            gps = {PIL.ExifTags.GPSTAGS.get(
-                i): exif['GPSInfo'][i] for i in exif['GPSInfo']}
-            lon, lat = lonlat(gps)
-            params = {"lon": str(lon), "lat": str(
-                lat), "zoom": 10, "format": "json", "accept-language": "fr"}
-            adress = requests.get(
-                "https://nominatim.openstreetmap.org/reverse", params=params).text
-            adress = json.loads(adress).get("display_name")
-            if adress:
-                adress = adress.split(", ")
-                city = adress[0]
-                country = adress[-1]
+        try:
+            format = re.findall(r"\.[A-Za-z0-9_]+$", file)[0]
+        except:
+            continue
+        file = folder + "/" + file
+        if format not in [".mov", ".MOV"]:
+            exif = get_exif(file)
+            if exif is None:
+                continue
+            if "DateTime" not in exif:
+                continue
+            DateTime = exif["DateTime"]
+            year = DateTime[:4]
+            month = months[DateTime[5:7]]
+            if "GPSInfo" in exif:
+                gps = {
+                    PIL.ExifTags.GPSTAGS.get(i): exif["GPSInfo"][i]
+                    for i in exif["GPSInfo"]
+                }
+                lon, lat = lonlat(gps)
+                params = {
+                    "lon": str(lon),
+                    "lat": str(lat),
+                    "zoom": 10,
+                    "format": "jsonv2",
+                    "accept-language": "fr",
+                }
+                while 1:
+                    try:
+                        adress = requests.get(
+                            "https://nominatim.openstreetmap.org/reverse", params=params
+                        ).text
+                        break
+                    except:
+                        print("retry")
+
+                adress = json.loads(adress).get("display_name")
+                if adress:
+                    adress = adress.split(", ")
+                    city = adress[0]
+                    country = adress[-1]
+                else:
+                    city = None
+                    country = None
             else:
                 city = None
                 country = None
         else:
-            city = None
-            country = None
+            try:
+                parser = hachoir.parser.createParser(file)
+                with parser:
+                    metadata = hachoir.metadata.extractMetadata(parser)
+                    metadata
+                    metadata = metadata.exportDictionary(human=False)
+                DateTime = metadata["Metadata"]["creation_date"]
+                year = DateTime[:4]
+                month = months[DateTime[5:7]]
+                city, country = None, None
+            except:
+                continue
+
         if city and country:
-            if not os.path.exists(os.path.abspath(".") +
-                                  f"/{country}/{city}/{year}/{month}"):
+            if not os.path.exists(
+                os.path.abspath(".") + f"/{country}/{city}/{year}/{month}"
+            ):
                 os.makedirs(os.path.abspath(".") +
                             f"/{country}/{city}/{year}/{month}")
-            name = str(len(os.listdir(os.path.abspath(".") +
-                                      f"/{country}/{city}/{year}/{month}"))+1)+format
+            name = (
+                str(
+                    len(
+                        os.listdir(
+                            os.path.abspath(".") +
+                            f"/{country}/{city}/{year}/{month}"
+                        )
+                    )
+                    + 1
+                )
+                + format
+            )
             newfile = os.path.abspath(
-                ".")+f"/{country}/{city}/{year}/{month}/{name}"
+                ".") + f"/{country}/{city}/{year}/{month}/{name}"
         else:
-            if not os.path.exists(os.path.abspath(".") +
-                                  f"/{year}/{month}"):
-                os.makedirs(os.path.abspath(".") +
-                            f"/{year}/{month}")
-            name = str(len(os.listdir(os.path.abspath(".") +
-                                      f"/{year}/{month}"))+1)+format
-            newfile = os.path.abspath(".")+f"/{year}/{month}/{name}"
+            if not os.path.exists(os.path.abspath(".") + f"/{year}/{month}"):
+                os.makedirs(os.path.abspath(".") + f"/{year}/{month}")
+            name = (
+                str(len(os.listdir(os.path.abspath(
+                    ".") + f"/{year}/{month}")) + 1)
+                + format
+            )
+            newfile = os.path.abspath(".") + f"/{year}/{month}/{name}"
         shutil.move(file, newfile)
-"""{'GPSLatitudeRef': 'N',
- 'GPSLatitude': (48.0, 53.0, 26.91),
- 'GPSLongitudeRef': 'E',
- 'GPSLongitude': (2.0, 8.0, 20.77),
- 'GPSAltitudeRef': b'\x00',
- 'GPSAltitude': 31.340000152617,
- 'GPSTimeStamp': (18.0, 2.0, 53.42),
- 'GPSSpeedRef': 'K',
- 'GPSSpeed': 0.0,
- 'GPSImgDirectionRef': 'T',
- 'GPSImgDirection': 83.45333869670152,
- 'GPSDestBearingRef': 'T',
- 'GPSDestBearing': 83.45333869670152,
- 'GPSDateStamp': '2021:04:09',
- 'GPSHPositioningError': 65.0}"""
