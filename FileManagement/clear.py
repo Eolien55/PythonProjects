@@ -25,7 +25,6 @@ for folder, _, files in os.walk("."):
         format = findall(r"\.[A-Za-z0-9_]+$", file)
         if not format:
             continue
-        print(format)
         format = format[0]
         os.rename(file, folder + "/" + str(length+1)+format)
         length += 1
