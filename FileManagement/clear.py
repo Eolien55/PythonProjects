@@ -15,15 +15,17 @@ for folder, _, files in os.walk("."):
                 if not os.path.exists(file):
                     continue
                 with open(file, "rb") as comparfile:
-                    if firstfile.read() == comparfile.read():
-                        os.remove(file)
+                    val1 = firstfile.read()
+                    val2 = comparfile.read()
+                if val1 == val2:
+                    os.remove(file)
 
 for folder, _, files in os.walk("."):
     length = 0
     for file in files:
         file = folder + "/" + file
         format = findall(r"\.[A-Za-z0-9_]+$", file)
-        if not format:
+        if not format or format in [".exe", ".EXE"]:
             continue
         format = format[0]
         os.rename(file, folder + "/" + str(length+1)+format)
