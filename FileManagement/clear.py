@@ -25,7 +25,7 @@ for folder, _, files in os.walk("."):
     for file in files:
         file = folder + "/" + file
         format = findall(r"\.[A-Za-z0-9_]+$", file)
-        if not format:
+        if not format or format in [".exe", ".EXE"]:
             continue
         format = format[0]
         os.rename(file, folder + "/" + str(length+1)+format)
