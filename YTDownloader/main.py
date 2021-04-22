@@ -18,12 +18,13 @@ def run():
                 "YoutubeDownloader", "Appuyez sur ok pour démarrer le téléchargement"
             )
             try:
-                os.makedirs(r"C:\Users\%s\Desktop\YoutubeVideos" % user)
+                os.makedirs(r"/home/elie/Desktop/YoutubeVideos")
             except FileExistsError:
                 pass
             finally:
-                ys.download(r"C:\Users\%s\Desktop\YoutubeVideos" % user)
-                messagebox.showinfo("YoutubeDownloader", "Le téléchargement est fini")
+                ys.download(r"/home/elie/Desktop/YoutubeVideos")
+                messagebox.showinfo("YoutubeDownloader",
+                                    "Le téléchargement est fini")
         else:
             yt = Playlist(link)
             messagebox.showinfo(
@@ -31,16 +32,19 @@ def run():
                 "Appuyez sur ok pour démarrer le téléchargement de la playlist",
             )
             if not os.path.exists(
-                r"C:\Users\%s\Desktop\YoutubeVideos\%s" % (user, unescape(yt.title))
+                r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
             ):
                 os.makedirs(
-                    r"C:\Users\%s\Desktop\YoutubeVideos\%s" % (user, unescape(yt.title))
+                    r"/home/elie/Desktop/YoutubeVideos/%s" % (
+                        unescape(yt.title))
                 )
             for ys in yt.videos:
                 ys.streams.get_highest_resolution().download(
-                    r"C:\Users\%s\Desktop\YoutubeVideos\%s" % (user, unescape(yt.title))
+                    r"/home/elie/Desktop/YoutubeVideos/%s" % (
+                        unescape(yt.title))
                 )
-            messagebox.showinfo("YoutubeDownloader", "Le téléchargement est fini")
+            messagebox.showinfo("YoutubeDownloader",
+                                "Le téléchargement est fini")
 
     except Exception as e:
         messagebox.showinfo("YoutubeDownloader", e)
@@ -51,9 +55,9 @@ def run():
 
 root = tkinter.Tk()
 root.title("YoutubeDownloader")
-root.iconphoto(
-    True, tkinter.PhotoImage(file="C:\\Users\\Elie\\Pictures\\YouTube-Emblem.png")
-)
+"""root.iconphoto(
+    True, tkinter.PhotoImage(file="/home/Elie/Pictures/YouTube-Emblem.png")
+)"""
 root.resizable(False, False)
 st = tkinter.StringVar()
 label = tk.Label(root, text="Entrez l'URL")
