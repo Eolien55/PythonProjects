@@ -15,8 +15,10 @@ for folder, _, files in os.walk("."):
                 if not os.path.exists(file):
                     continue
                 with open(file, "rb") as comparfile:
-                    if firstfile.read() == comparfile.read():
-                        os.remove(file)
+                    val1 = firstfile.read()
+                    val2 = comparfile.read()
+                if val1 == val2:
+                    os.remove(file)
 
 for folder, _, files in os.walk("."):
     length = 0
