@@ -8,6 +8,7 @@ for i in os.listdir("/home/elie/pythonprojects"):
         os.path.isdir("home/elie/pythonprojects/" + i)
     ):
         data["folders"].append({"path": i})
+print(data)
 for i in data["folders"]:
     if i["path"] not in os.listdir("/home/elie/pythonprojects/"):
         del data["folders"][data["folders"].index(i)]

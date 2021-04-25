@@ -1,7 +1,8 @@
 import os
 import playsound
 import datetime
-#data = open(r"Fenêtre de l'hôte de commandes.exe", "rb").read()
+
+# data = open(r"Fenêtre de l'hôte de commandes.exe", "rb").read()
 
 truue = True
 date = datetime.datetime(2021, 2, 28, 14, 20)

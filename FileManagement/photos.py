@@ -52,9 +52,9 @@ months = {
 }
 
 if len(argv) > 1:
-    file = (argv[1])
+    file = argv[1]
 else:
-    file = '.'
+    file = "."
 
 for folder, _, files in os.walk(file):
     folder = os.path.abspath(folder)
@@ -125,28 +125,24 @@ for folder, _, files in os.walk(file):
             if not os.path.exists(
                 os.path.abspath(".") + f"/{country}/{city}/{year}/{month}"
             ):
-                os.makedirs(os.path.abspath(".") +
-                            f"/{country}/{city}/{year}/{month}")
+                os.makedirs(os.path.abspath(".") + f"/{country}/{city}/{year}/{month}")
             name = (
                 str(
                     len(
                         os.listdir(
-                            os.path.abspath(".") +
-                            f"/{country}/{city}/{year}/{month}"
+                            os.path.abspath(".") + f"/{country}/{city}/{year}/{month}"
                         )
                     )
                     + 1
                 )
                 + format
             )
-            newfile = os.path.abspath(
-                ".") + f"/{country}/{city}/{year}/{month}/{name}"
+            newfile = os.path.abspath(".") + f"/{country}/{city}/{year}/{month}/{name}"
         else:
             if not os.path.exists(os.path.abspath(".") + f"/{year}/{month}"):
                 os.makedirs(os.path.abspath(".") + f"/{year}/{month}")
             name = (
-                str(len(os.listdir(os.path.abspath(
-                    ".") + f"/{year}/{month}")) + 1)
+                str(len(os.listdir(os.path.abspath(".") + f"/{year}/{month}")) + 1)
                 + format
             )
             newfile = os.path.abspath(".") + f"/{year}/{month}/{name}"

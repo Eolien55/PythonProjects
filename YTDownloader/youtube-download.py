@@ -24,13 +24,11 @@ def run(link, soundonly=False):
                 r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
             ):
                 os.makedirs(
-                    r"/home/elie/Desktop/YoutubeVideos/%s" % (
-                        unescape(yt.title))
+                    r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                 )
             for ys in yt.videos:
                 ys.streams.get_highest_resolution().download(
-                    r"/home/elie/Desktop/YoutubeVideos/%s" % (
-                        unescape(yt.title))
+                    r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                 )
     else:
         if not link.startswith("https://www.youtube.com/playlist"):
@@ -41,34 +39,47 @@ def run(link, soundonly=False):
             except FileExistsError:
                 pass
             finally:
-                ys.download(r"/home/elie/Desktop/YoutubeVideos",
-                            unescape(yt.title).replace(' ', '_'))
-                video = VideoFileClip(r"/home/elie/Desktop/YoutubeVideos/%s.mp4" %
-                                      (unescape(yt.title).replace(' ', '_').replace('.', '')))
+                ys.download(
+                    r"/home/elie/Desktop/YoutubeVideos",
+                    unescape(yt.title).replace(" ", "_"),
+                )
+                video = VideoFileClip(
+                    r"/home/elie/Desktop/YoutubeVideos/%s.mp4"
+                    % (unescape(yt.title).replace(" ", "_").replace(".", ""))
+                )
                 video.audio.write_audiofile(
-                    r"/home/elie/Desktop/YoutubeVideos/%s.mp3" % (unescape(yt.title)))
+                    r"/home/elie/Desktop/YoutubeVideos/%s.mp3" % (unescape(yt.title))
+                )
         else:
             ytP = Playlist(link)
             if not os.path.exists(
                 r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title))
             ):
                 os.makedirs(
-                    r"/home/elie/Desktop/YoutubeVideos/%s" % (
-                        unescape(ytP.title))
+                    r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title))
                 )
             for yt in ytP.videos:
                 yt.streams.get_highest_resolution().download(
-                    r"/home/elie/Desktop/YoutubeVideos/%s" % (
-                        unescape(ytP.title)), unescape(yt.title).replace(' ', '_')
+                    r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title)),
+                    unescape(yt.title).replace(" ", "_"),
                 )
-                video = VideoFileClip(r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp4" % (
-                    unescape(ytP.title), unescape(yt.title).replace(' ', '_').replace('.', '')))
+                video = VideoFileClip(
+                    r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp4"
+                    % (
+                        unescape(ytP.title),
+                        unescape(yt.title).replace(" ", "_").replace(".", ""),
+                    )
+                )
                 video.audio.write_audiofile(
-                    r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp4" % (unescape(ytP.title), unescape(yt.title)))
+                    r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp4"
+                    % (unescape(ytP.title), unescape(yt.title))
+                )
 
 
-params = {i: True for i in sys.argv if i.startswith('-')}
-if '-h' in params.keys() or '--help' in params.keys():
-    print('Ok, so it downloads youtube videos and you can set --soundonly to have an mp4 without image.')
+params = {i: True for i in sys.argv if i.startswith("-")}
+if "-h" in params.keys() or "--help" in params.keys():
+    print(
+        "Ok, so it downloads youtube videos and you can set --soundonly to have an mp4 without image."
+    )
     exit()
-run(sys.argv[1], soundonly=bool(params.get('--soundonly')))
+run(sys.argv[1], soundonly=bool(params.get("--soundonly")))

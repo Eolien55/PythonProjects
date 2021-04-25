@@ -20,9 +20,9 @@ months = {
     "12": "D\u00e9cembre",
 }
 if len(argv) > 1:
-    pathOr = (argv[1])
+    pathOr = argv[1]
 else:
-    pathOr = '.'
+    pathOr = "."
 
 for folder, _, files in os.walk(pathOr):
     folder = os.path.abspath(folder)
@@ -52,5 +52,5 @@ for folder, _, files in os.walk(pathOr):
             path = f"./{year}/{month}/"
             if not os.path.exists(path):
                 os.makedirs(path)
-            name = str(len(os.listdir(path))+1)+format
-            shutil.move(file, path+name)
+            name = str(len(os.listdir(path)) + 1) + format
+            shutil.move(file, path + name)

@@ -23,8 +23,7 @@ def run():
                 pass
             finally:
                 ys.download(r"/home/elie/Desktop/YoutubeVideos")
-                messagebox.showinfo("YoutubeDownloader",
-                                    "Le téléchargement est fini")
+                messagebox.showinfo("YoutubeDownloader", "Le téléchargement est fini")
         else:
             yt = Playlist(link)
             messagebox.showinfo(
@@ -35,16 +34,13 @@ def run():
                 r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
             ):
                 os.makedirs(
-                    r"/home/elie/Desktop/YoutubeVideos/%s" % (
-                        unescape(yt.title))
+                    r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                 )
             for ys in yt.videos:
                 ys.streams.get_highest_resolution().download(
-                    r"/home/elie/Desktop/YoutubeVideos/%s" % (
-                        unescape(yt.title))
+                    r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                 )
-            messagebox.showinfo("YoutubeDownloader",
-                                "Le téléchargement est fini")
+            messagebox.showinfo("YoutubeDownloader", "Le téléchargement est fini")
 
     except Exception as e:
         messagebox.showinfo("YoutubeDownloader", e)

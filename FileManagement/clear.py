@@ -3,7 +3,7 @@ from re import findall
 
 for folder, _, files in os.walk("."):
     for file in files:
-        file = folder+"/"+file
+        file = folder + "/" + file
         THEfile = file
         if not os.path.exists(file):
             continue
@@ -28,5 +28,5 @@ for folder, _, files in os.walk("."):
         if not format or format in [".exe", ".EXE"]:
             continue
         format = format[0]
-        os.rename(file, folder + "/" + str(length+1)+format)
+        os.rename(file, folder + "/" + str(length + 1) + format)
         length += 1

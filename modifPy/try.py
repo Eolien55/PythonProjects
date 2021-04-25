@@ -1,4 +1,0 @@
-#%%
-print("ohayo")
-#%%
-print("naisuu")

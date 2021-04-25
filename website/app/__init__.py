@@ -24,6 +24,7 @@ def sessionlive():
     flask.session.permanent = True
     app.permanent_session_lifetime = datetime.timedelta(minutes=5)
 
+
 ############################################ USB A DISTANCE ############################################
 
 
@@ -38,8 +39,7 @@ def menu(file="/"):
         if "username" not in flask.session:
             return flask.redirect("/files/login")
         elif (
-            not hashlib.sha512(
-                bytes(flask.session["username"], "UTF-8")).hexdigest()
+            not hashlib.sha512(bytes(flask.session["username"], "UTF-8")).hexdigest()
             == password
         ):
             return flask.redirect("/files/login")
@@ -58,7 +58,7 @@ def menu(file="/"):
         )
     if os.path.isdir(file):
         try:
-            previous = file[::-1][file[::-1].index("/") + 1:][::-1]
+            previous = file[::-1][file[::-1].index("/") + 1 :][::-1]
         except ValueError:
             return (
                 open(
@@ -87,7 +87,7 @@ def menu(file="/"):
                                 + "/"
                                 + file[
                                     file.index("/home/elie/Documents/")
-                                    + len("/home/elie/Documents/"):
+                                    + len("/home/elie/Documents/") :
                                 ]
                                 + "/"
                                 + i.replace(" ", "+"),
@@ -112,7 +112,7 @@ def menu(file="/"):
                                 + "/"
                                 + file[
                                     file.index("/home/elie/Documents/")
-                                    + len("/home/elie/Documents/"):
+                                    + len("/home/elie/Documents/") :
                                 ]
                                 + "/"
                                 + i.replace(" ", "+"),
@@ -133,8 +133,8 @@ def menu(file="/"):
             else "files/path/allowed"
             + "/"
             + file[
-                file.index("/home/elie/Documents/") + len("/home/elie/Documents/"):
-            ][::-1][file[::-1].index("/") + 1:][::-1],
+                file.index("/home/elie/Documents/") + len("/home/elie/Documents/") :
+            ][::-1][file[::-1].index("/") + 1 :][::-1],
             temp,
         )
         return file2
@@ -160,8 +160,7 @@ def imma_upload_ur_mother(prevfile):
     if "username" not in flask.session:
         return flask.redirect("/files/login")
     elif (
-        not hashlib.sha512(
-            bytes(flask.session["username"], "UTF-8")).hexdigest()
+        not hashlib.sha512(bytes(flask.session["username"], "UTF-8")).hexdigest()
         == password
     ):
         return flask.redirect("/files/login")
@@ -264,8 +263,7 @@ def login():
    </html>
    """
     if (
-        hashlib.sha512(
-            bytes(flask.request.form["username"], "UTF-8")).hexdigest()
+        hashlib.sha512(bytes(flask.request.form["username"], "UTF-8")).hexdigest()
         == password
     ):
         flask.session["username"] = flask.request.form["username"]
