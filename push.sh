@@ -1,4 +1,6 @@
 git init
 git add .
-git commit -a -m SAVE
+echo "Commit message : "
+read commit
+git commit -a -m $commit
 git push --set-upstream git@github.com:Eolien55/PythonProjects.git master
