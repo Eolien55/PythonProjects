@@ -12,7 +12,7 @@ class Board:
     def __init__(self, THATSAboard):
         global or_board
         self.isblank = False
-        self.gap = 75
+        self.gap = 40
         self.length, self.board = self.model(THATSAboard)
         empty, self.or_board = self.model(THATSAboard)
         open("or_board", "w").write(str(self.or_board))
@@ -56,7 +56,7 @@ class Board:
     def model(self, board):
         length = int(len(board) ** 0.25)
         board = [
-            board[i * length ** 2 : (i + 1) * length ** 2] for i in range(length ** 2)
+            board[i * length ** 2: (i + 1) * length ** 2] for i in range(length ** 2)
         ]
         return length, board
 
@@ -143,7 +143,8 @@ class Board:
                 text,
                 (
                     i[1][1] * self.gap + (self.gap / 2 - text.get_width() / 2),
-                    i[1][0] * self.gap + (self.gap / 2 - text.get_height() / 2),
+                    i[1][0] * self.gap +
+                    (self.gap / 2 - text.get_height() / 2),
                 ),
             )
         for i in non_norm_vals:
@@ -174,8 +175,7 @@ class Board:
                 self.squares[j][i].value = self.board[j][i]
 
     def solve_gui(self, win):
-        for event in pg.event.get():
-            pass
+        pg.event.get()
         board = self.board
         find = find_empty(self.board, self.length)
         if not find:
@@ -253,8 +253,9 @@ def main():
     )
     finished = False
     pg.display.set_caption("Sudoku")
-    # im = pg.image.load("C:\\Users\\Elie\\PythonProjects\\sudoku\\icon.png")
-    # pg.display.set_icon(im)
+    im = pg.image.load(
+        "/media/elie/ui/Users/Elie/PythonProjects/sudoku/icon.png")
+    pg.display.set_icon(im)
     key = None
     while not finished:
         for event in pg.event.get():
