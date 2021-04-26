@@ -1,13 +1,14 @@
-import sys
-from pytube import YouTube, Playlist
 import os
-from html import unescape
-from moviepy.editor import VideoFileClip
+import sys
 
 user = os.getlogin()
 
 
 def run(link, soundonly=False):
+    from html import unescape
+    from pytube import YouTube, Playlist
+    from moviepy.editor import VideoFileClip
+
     if not soundonly:
         if not link.startswith("https://www.youtube.com/playlist"):
             yt = YouTube(link)
@@ -79,7 +80,7 @@ def run(link, soundonly=False):
 params = {i: True for i in sys.argv if i.startswith("-")}
 if "-h" in params.keys() or "--help" in params.keys():
     print(
-        "Ok, so it downloads youtube videos and you can set --soundonly to have an mp4 without image."
+        "Ok, so it downloads youtube videos (or playlists) and you can set --soundonly to have an mp3."
     )
     exit()
 run(sys.argv[1], soundonly=bool(params.get("--soundonly")))

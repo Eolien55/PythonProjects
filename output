@@ -1,1 +1,12 @@
 Reinitialized existing Git repository in /home/elie/pythonprojects/.git/
+[master 10dc914] SAVE
+ 17 files changed, 100 insertions(+), 71 deletions(-)
+ create mode 100644 FileManagement/__pycache__/main.cpython-38.pyc
+ create mode 100644 FileManagement/__pycache__/updateCommandsImports.cpython-38.pyc
+ create mode 100644 FileManagement/__pycache__/updateWorkspace.cpython-38.pyc
+ create mode 100644 morpion/game.py
+ create mode 100644 output
+ create mode 100644 stdin
+To https://github.com/Eolien55/PythonProjects.git
+   910a83b..10dc914  master -> master
+Branch 'master' set up to track remote branch 'master' from 'https://github.com/Eolien55/PythonProjects.git'.

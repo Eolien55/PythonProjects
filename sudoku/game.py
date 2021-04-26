@@ -253,8 +253,8 @@ def main():
     )
     finished = False
     pg.display.set_caption("Sudoku")
-    im = pg.image.load("C:\\Users\\Elie\\PythonProjects\\sudoku\\icon.png")
-    pg.display.set_icon(im)
+    # im = pg.image.load("C:\\Users\\Elie\\PythonProjects\\sudoku\\icon.png")
+    # pg.display.set_icon(im)
     key = None
     while not finished:
         for event in pg.event.get():

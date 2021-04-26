@@ -1,4 +1,4 @@
-import os
+'''import os
 
 cont = """import click
 @click.group()
@@ -15,4 +15,4 @@ for i in os.listdir("/home/elie/pythonprojects/commands"):
     ) if not os.path.isdir(i) and not i == "commands.py" else 1 + 1
 open("/home/elie/pythonprojects/commands/commands.py", "w").write(
     cont % "\n".join(modules)
-)
+)'''

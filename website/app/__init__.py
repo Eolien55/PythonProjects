@@ -394,16 +394,8 @@ def cmd():
             stdin = stdin.split('\n')
             open('/home/elie/pythonprojects/website/app/.sh', 'w').write(za_command)
             os.system("chmod +x /home/elie/pythonprojects/website/app/.sh")
-            process = subprocess.Popen(
-                '/home/elie/pythonprojects/website/app/.sh', stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text="UTF-8")
-            print(stdin, za_command)
-            for line in stdin:
-                process.stdin.write(line+'\n')
-            \"""while 1:
-                break
-                if process.poll() is not None:
-                    break\"""
-            with process.stdout:
+            process
+            
                 return flask.jsonify({"result": re.sub(r'(\x9B|\x1B\[)[0-?]*[ -/]*[@-~]',
                                                        '', process.stdout.read(), flags=re.IGNORECASE)})
     return open("/home/elie/pythonprojects/website/app/cmd.html", "r").read()"""
