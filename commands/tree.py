@@ -4,7 +4,7 @@ import os
 commands = ["tree"]
 
 
-@click.command("tree")
+@click.command()
 @click.argument("directory")
 def tree(directory):
     """This script print a directory tree built with the inputted directory name"""
@@ -47,3 +47,4 @@ def tree(directory):
         return build
 
     click.echo(build_tree(the_tree, ["", -1])[0])
+tree()

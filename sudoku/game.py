@@ -12,7 +12,7 @@ class Board:
     def __init__(self, THATSAboard):
         global or_board
         self.isblank = False
-        self.gap = 40
+        self.gap = 75
         self.length, self.board = self.model(THATSAboard)
         empty, self.or_board = self.model(THATSAboard)
         open("or_board", "w").write(str(self.or_board))
@@ -26,6 +26,7 @@ class Board:
             for j in range(self.length ** 2)
         ]
         self.selected = self.squares[0][0]
+        self.visual = False
 
     def blank(self):
         self.isblank = True
@@ -188,7 +189,8 @@ class Board:
             if is_valid(board, i, (row, col), self.points, self.length):
                 self.board[row][col] = i
                 self.squares[row][col].right = True
-                self.draw(win)
+                if self.visual:
+                    self.draw(win)
                 # time.sleep(0.001)
                 if self.solve_gui(win):
                     return True
@@ -298,6 +300,8 @@ def main():
                     key = 8
                 if event.key == pg.K_KP9:
                     key = 9
+                if event.key == pg.K_v:
+                    board.visual = not board.visual
                 if event.key == pg.K_DELETE:
                     board.clear()
                     key = None
