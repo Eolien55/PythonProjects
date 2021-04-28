@@ -47,4 +47,6 @@ def tree(directory):
         return build
 
     click.echo(build_tree(the_tree, ["", -1])[0])
+
+
 tree()

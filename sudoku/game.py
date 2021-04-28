@@ -57,7 +57,7 @@ class Board:
     def model(self, board):
         length = int(len(board) ** 0.25)
         board = [
-            board[i * length ** 2: (i + 1) * length ** 2] for i in range(length ** 2)
+            board[i * length ** 2 : (i + 1) * length ** 2] for i in range(length ** 2)
         ]
         return length, board
 
@@ -144,8 +144,7 @@ class Board:
                 text,
                 (
                     i[1][1] * self.gap + (self.gap / 2 - text.get_width() / 2),
-                    i[1][0] * self.gap +
-                    (self.gap / 2 - text.get_height() / 2),
+                    i[1][0] * self.gap + (self.gap / 2 - text.get_height() / 2),
                 ),
             )
         for i in non_norm_vals:
@@ -255,8 +254,7 @@ def main():
     )
     finished = False
     pg.display.set_caption("Sudoku")
-    im = pg.image.load(
-        "/media/elie/ui/Users/Elie/PythonProjects/sudoku/icon.png")
+    im = pg.image.load("/media/elie/ui/Users/Elie/PythonProjects/sudoku/icon.png")
     pg.display.set_icon(im)
     key = None
     while not finished:
