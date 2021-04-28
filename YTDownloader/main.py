@@ -40,27 +40,27 @@ def rundownload(link, soundonly=False):
                     "", "Appuyer sur ok pour d\u00e9mmarer le t\u00e9l\u00e9chargement"
                 )
                 try:
-                    os.makedirs(r"/home/elie/Desktop/YoutubeVideos")
+                    os.makedirs(r"C:/users/elie/Desktop/YoutubeVideos")
                 except FileExistsError:
                     pass
                 finally:
 
-                    ys.download(r"/home/elie/Desktop/YoutubeVideos")
+                    ys.download(r"C:/users/elie/Desktop/YoutubeVideos")
             else:
                 yt = Playlist(link)
                 messagebox.showinfo(
                     "Appuyer sur ok pour d\u00e9mmarer le t\u00e9l\u00e9chargement de la playlist"
                 )
                 if not os.path.exists(
-                    r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
+                    r"C:/users/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                 ):
                     os.makedirs(
-                        r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                     )
                 for ys in yt.videos:
 
                     ys.streams.get_highest_resolution().download(
-                        r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                     )
         else:
             from youtube_search import YoutubeSearch
@@ -82,25 +82,25 @@ def rundownload(link, soundonly=False):
                     "", "Appuyer sur ok pour d\u00e9mmarer le t\u00e9l\u00e9chargement"
                 )
                 try:
-                    os.makedirs(r"/home/elie/Desktop/YoutubeVideos")
+                    os.makedirs(r"C:/users/elie/Desktop/YoutubeVideos")
                 except FileExistsError:
                     pass
                 finally:
 
                     ys.download(
-                        r"/home/elie/Desktop/YoutubeVideos",
+                        r"C:/users/elie/Desktop/YoutubeVideos",
                         unescape(yt.title).replace(" ", "_"),
                     )
                     with VideoFileClip(
-                        r"/home/elie/Desktop/YoutubeVideos/%s.mp4"
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s.mp4"
                         % (unescape(yt.title).replace(" ", "_").replace(".", ""))
                     ) as video:
                         video.audio.write_audiofile(
-                            r"/home/elie/Desktop/YoutubeVideos/%s.mp3"
+                            r"C:/users/elie/Desktop/YoutubeVideos/%s.mp3"
                             % (unescape(yt.title))
                         )
                     os.remove(
-                        r"/home/elie/Desktop/YoutubeVideos/%s.mp4"
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s.mp4"
                         % (unescape(yt.title).replace(" ", "_").replace(".", ""))
                     )
             else:
@@ -110,30 +110,32 @@ def rundownload(link, soundonly=False):
                     "Appuyer sur ok pour d\u00e9mmarer le t\u00e9l\u00e9chargement de la playlist",
                 )
                 if not os.path.exists(
-                    r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title))
+                    r"C:/users/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title))
                 ):
                     os.makedirs(
-                        r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title))
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s"
+                        % (unescape(ytP.title))
                     )
                 for yt in ytP.videos:
 
                     yt.streams.get_highest_resolution().download(
-                        r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title)),
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s"
+                        % (unescape(ytP.title)),
                         unescape(yt.title).replace(" ", "_"),
                     )
                     with VideoFileClip(
-                        r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp4"
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s/%s.mp4"
                         % (
                             unescape(ytP.title),
                             unescape(yt.title).replace(" ", "_").replace(".", ""),
                         )
                     ) as video:
                         video.audio.write_audiofile(
-                            r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp4"
+                            r"C:/users/elie/Desktop/YoutubeVideos/%s/%s.mp4"
                             % (unescape(ytP.title), unescape(yt.title))
                         )
                     os.remove(
-                        r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp4"
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s/%s.mp4"
                         % (unescape(ytP.title), unescape(yt.title))
                     )
         else:
