@@ -8,7 +8,7 @@ if [ $branch != "n" ]
 then
 	git checkout $branch
 else 
-	set branch=master
+	set branch="master"
 fi
 git commit -a -m "$commit"
 git push --set-upstream git@github.com:Eolien55/PythonProjects.git $branch
