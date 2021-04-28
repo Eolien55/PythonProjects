@@ -14,24 +14,24 @@ def run(link, soundonly=False):
                 yt = YouTube(link)
                 ys = yt.streams.get_highest_resolution()
                 try:
-                    os.makedirs(r"/home/elie/Desktop/YoutubeVideos")
+                    os.makedirs(r"C:/users/elie/Desktop/YoutubeVideos")
                 except FileExistsError:
                     pass
                 finally:
                     print(f"OK, let's download '{unescape(yt.title)}'")
-                    ys.download(r"/home/elie/Desktop/YoutubeVideos")
+                    ys.download(r"C:/users/elie/Desktop/YoutubeVideos")
             else:
                 yt = Playlist(link)
                 if not os.path.exists(
-                    r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
+                    r"C:/users/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                 ):
                     os.makedirs(
-                        r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                     )
                 for ys in yt.videos:
                     print(f"OK, let's download '{unescape(ys.title)}'")
                     ys.streams.get_highest_resolution().download(
-                        r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                     )
         else:
             from youtube_search import YoutubeSearch
@@ -52,46 +52,48 @@ def run(link, soundonly=False):
                 yt = YouTube(link)
                 ys = yt.streams.get_highest_resolution()
                 try:
-                    os.makedirs(r"/home/elie/Desktop/YoutubeVideos")
+                    os.makedirs(r"C:/users/elie/Desktop/YoutubeVideos")
                 except FileExistsError:
                     pass
                 finally:
                     print(f"OK, let's download '{unescape(yt.title)}'")
                     ys.download(
-                        r"/home/elie/Desktop/YoutubeVideos",
+                        r"C:/users/elie/Desktop/YoutubeVideos",
                         unescape(yt.title).replace(" ", "_"),
                     )
                     video = VideoFileClip(
-                        r"/home/elie/Desktop/YoutubeVideos/%s.mp4"
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s.mp4"
                         % (unescape(yt.title).replace(" ", "_").replace(".", ""))
                     )
                     video.audio.write_audiofile(
-                        r"/home/elie/Desktop/YoutubeVideos/%s.mp3"
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s.mp3"
                         % (unescape(yt.title))
                     )
             else:
                 ytP = Playlist(link)
                 if not os.path.exists(
-                    r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title))
+                    r"C:/users/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title))
                 ):
                     os.makedirs(
-                        r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title))
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s"
+                        % (unescape(ytP.title))
                     )
                 for yt in ytP.videos:
                     print(f"OK, let's download '{unescape(yt.title)}'")
                     yt.streams.get_highest_resolution().download(
-                        r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title)),
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s"
+                        % (unescape(ytP.title)),
                         unescape(yt.title).replace(" ", "_"),
                     )
                     video = VideoFileClip(
-                        r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp4"
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s/%s.mp4"
                         % (
                             unescape(ytP.title),
                             unescape(yt.title).replace(" ", "_").replace(".", ""),
                         )
                     )
                     video.audio.write_audiofile(
-                        r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp4"
+                        r"C:/users/elie/Desktop/YoutubeVideos/%s/%s.mp4"
                         % (unescape(ytP.title), unescape(yt.title))
                     )
         else:

@@ -32,7 +32,7 @@ class run:
             time.sleep(5)
             try:
                 file = open(
-                    r"/home/elie/pythonprojects/PCSchedule/schedule.txt", "r"
+                    r"C:/users/elie/pythonprojects/PCSchedule/schedule.txt", "r"
                 ).read()
                 break
             except:

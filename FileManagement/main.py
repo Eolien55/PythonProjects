@@ -34,7 +34,7 @@ class ManageFileType:
             "Dec": "Décembre",
         }
 
-    def check(self, path=r"/home/elie/Documents/Scolaire"):
+    def check(self, path=r"C:/users/elie/Documents/Scolaire"):
         for folder, a, files in os.walk(path):
             for file in files:
                 try:
@@ -56,7 +56,7 @@ class ManageFileType:
         assert file and path, "Lack of errors"
         if fold is None:
             if not os.path.exists(
-                r"/home/elie/Documents/Scolaire/%s/%s/%s"
+                r"C:/users/elie/Documents/Scolaire/%s/%s/%s"
                 % (
                     time.ctime(os.path.getctime(path))[20:24],
                     self.matiere[m],
@@ -64,17 +64,17 @@ class ManageFileType:
                 )
             ):
                 os.makedirs(
-                    r"/home/elie/Documents/Scolaire/%s/%s/%s"
+                    r"C:/users/elie/Documents/Scolaire/%s/%s/%s"
                     % (
                         time.ctime(os.path.getctime(path))[20:24],
                         self.matiere[m],
                         self.mois[time.ctime(os.path.getctime(path))[4:7]],
                     )
                 )
-            run = """shutil.move(path,r"/home/elie/Documents/Scolaire/%s/%s/%s/%s"%(time.ctime(os.path.getctime(path))[20:24],self.matiere[m],self.mois[time.ctime(os.path.getctime(path))[4:7]],na+file[file.index('.'):]))"""
+            run = """shutil.move(path,r"C:/users/elie/Documents/Scolaire/%s/%s/%s/%s"%(time.ctime(os.path.getctime(path))[20:24],self.matiere[m],self.mois[time.ctime(os.path.getctime(path))[4:7]],na+file[file.index('.'):]))"""
         else:
             if not os.path.exists(
-                r"/home/elie/Documents/Scolaire/%s/%s/%s/%s"
+                r"C:/users/elie/Documents/Scolaire/%s/%s/%s/%s"
                 % (
                     time.ctime(os.path.getctime(path))[20:24],
                     self.matiere[m],
@@ -83,7 +83,7 @@ class ManageFileType:
                 )
             ):
                 os.makedirs(
-                    r"/home/elie/Documents/Scolaire/%s/%s/%s/%s"
+                    r"C:/users/elie/Documents/Scolaire/%s/%s/%s/%s"
                     % (
                         time.ctime(os.path.getctime(path))[20:24],
                         self.matiere[m],
@@ -91,9 +91,9 @@ class ManageFileType:
                         fold,
                     )
                 )
-            run = """shutil.move(path,r"/home/elie/Documents/Scolaire/%s/%s/%s/%s/%s"%(time.ctime(os.path.getctime(path))[20:24],self.matiere[m],self.mois[time.ctime(os.path.getctime(path))[4:7]],fold,na+file[file.index('.'):]))"""
+            run = """shutil.move(path,r"C:/users/elie/Documents/Scolaire/%s/%s/%s/%s/%s"%(time.ctime(os.path.getctime(path))[20:24],self.matiere[m],self.mois[time.ctime(os.path.getctime(path))[4:7]],fold,na+file[file.index('.'):]))"""
         newpath = (
-            r"/home/elie/Documents/Scolaire/%s/%s/%s/%s"
+            r"C:/users/elie/Documents/Scolaire/%s/%s/%s/%s"
             % (
                 time.ctime(os.path.getctime(path))[20:24],
                 self.matiere[m],
@@ -101,7 +101,7 @@ class ManageFileType:
                 fold,
             )
             if fold
-            else r"/home/elie/Documents/Scolaire/%s/%s/%s"
+            else r"C:/users/elie/Documents/Scolaire/%s/%s/%s"
             % (
                 time.ctime(os.path.getctime(path))[20:24],
                 self.matiere[m],

@@ -47,7 +47,7 @@ def oze():
     while 1:
         try:
             driver = webdriver.Firefox(
-                executable_path=r"/home/elie/geckodriver",
+                executable_path=r"C:/users/elie/geckodriver",
                 firefox_options=options,
             )
             driver.get("http://ozecollege.yvelines.fr")

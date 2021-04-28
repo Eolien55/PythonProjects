@@ -1,7 +1,7 @@
 class schedule:
     def __init__(self):
         self.emploi = eval(
-            open(r"/home/elie/pythonprojects/PCSchedule/schedule.txt", "r").read()
+            open(r"C:/users/elie/pythonprojects/PCSchedule/schedule.txt", "r").read()
         )
         self.temp = ""
         self.templist = []
@@ -46,7 +46,7 @@ class schedule:
                 self.temp = ""
             self.emploi = self.templist[::-1]
             self.temp, self.templist = "", []
-            open(r"/home/elie/pythonprojects/PCSchedule/schedule.txt", "w").write(
+            open(r"C:/users/elie/pythonprojects/PCSchedule/schedule.txt", "w").write(
                 str(self.emploi)
             )
             print(
@@ -55,7 +55,7 @@ class schedule:
                         str(i)
                         for i in eval(
                             open(
-                                r"/home/elie/pythonprojects/PCSchedule/schedule.txt",
+                                r"C:/users/elie/pythonprojects/PCSchedule/schedule.txt",
                                 "r",
                             ).read()
                         )

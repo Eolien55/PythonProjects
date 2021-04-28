@@ -1,6 +1,6 @@
 import rsa, subprocess, os
 
-os.system("cd /home/elie/pythonprojects/Chiffrement")
+os.system("cd C:/users/elie/pythonprojects/Chiffrement")
 
 subprocess.run("")
 key = rsa.newkeys(1024)

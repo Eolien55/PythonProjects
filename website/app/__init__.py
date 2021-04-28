@@ -15,7 +15,7 @@ app = flask.Flask(__name__)
 
 password = "052cf1ebd71d676a64f2e4a8926155702996989cba7a974133a88ec996878960db0c782643e25c3465db0fcc329417bc5ae4eb99a14b8606d63018aae9cbe05b"
 app.secret_key = "oof"
-UPLOAD_FOLDER = "/home/elie/Documents/usb"
+UPLOAD_FOLDER = "C:/users/elie/Documents/usb"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
@@ -33,7 +33,7 @@ def menu(file="/"):
     file = "/" + file
     isallowed = False
     if "allowed/" in file and file.index("allowed/") < 2:
-        file = file.replace("allowed/", "/home/elie/Documents/")
+        file = file.replace("allowed/", "C:/users/elie/Documents/")
         isallowed = True
     else:
         if "username" not in flask.session:
@@ -44,7 +44,7 @@ def menu(file="/"):
         ):
             return flask.redirect("/files/login")
     if "allowed/" in file and file.index("allowed/") < 2:
-        file.replace("allowed/", "/home/elie/Documents/")
+        file.replace("allowed/", "C:/users/elie/Documents/")
     if not os.path.exists(file):
         file = file.replace("+", " ")
     if not os.path.exists(file):
@@ -52,7 +52,7 @@ def menu(file="/"):
     if not os.path.exists(file):
         return (
             open(
-                "/home/elie/pythonprojects/website/app/usbadistance/404.html", "r"
+                "C:/users/elie/pythonprojects/website/app/usbadistance/404.html", "r"
             ).read(),
             404,
         )
@@ -62,13 +62,13 @@ def menu(file="/"):
         except ValueError:
             return (
                 open(
-                    "/home/elie/pythonprojects/website/app/usbadistance/404.html",
+                    "C:/users/elie/pythonprojects/website/app/usbadistance/404.html",
                     "r",
                 ).read(),
                 404,
             )
         file2 = open(
-            "/home/elie/pythonprojects/website/app/usbadistance/a.html", "r"
+            "C:/users/elie/pythonprojects/website/app/usbadistance/a.html", "r"
         ).read()
         temp = """%s"""
         for cd, subs, files in os.walk(file):
@@ -86,8 +86,8 @@ def menu(file="/"):
                                 else "allowed"
                                 + "/"
                                 + file[
-                                    file.index("/home/elie/Documents/")
-                                    + len("/home/elie/Documents/") :
+                                    file.index("C:/users/elie/Documents/")
+                                    + len("C:/users/elie/Documents/") :
                                 ]
                                 + "/"
                                 + i.replace(" ", "+"),
@@ -111,8 +111,8 @@ def menu(file="/"):
                                 else "allowed"
                                 + "/"
                                 + file[
-                                    file.index("/home/elie/Documents/")
-                                    + len("/home/elie/Documents/") :
+                                    file.index("C:/users/elie/Documents/")
+                                    + len("C:/users/elie/Documents/") :
                                 ]
                                 + "/"
                                 + i.replace(" ", "+"),
@@ -133,7 +133,8 @@ def menu(file="/"):
             else "files/path/allowed"
             + "/"
             + file[
-                file.index("/home/elie/Documents/") + len("/home/elie/Documents/") :
+                file.index("C:/users/elie/Documents/")
+                + len("C:/users/elie/Documents/") :
             ][::-1][file[::-1].index("/") + 1 :][::-1],
             temp,
         )
@@ -151,7 +152,7 @@ def allowed_file(filename):
 
 @app.route("/files/add/", methods=["GET"])
 def redir():
-    return flask.redirect("/files/add//home")
+    return flask.redirect("/files/add/C:/users")
 
 
 @app.route("/files/add/<path:prevfile>", methods=["GET", "POST"])
@@ -165,7 +166,7 @@ def imma_upload_ur_mother(prevfile):
     ):
         return flask.redirect("/files/login")
     if not prevfile:
-        prevfile = "/home"
+        prevfile = "C:/users"
     if flask.request.method == "POST":
         # check if the post request has the file part
         if "file" not in flask.request.files:
@@ -181,14 +182,14 @@ def imma_upload_ur_mother(prevfile):
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             return flask.redirect(f"/files/path/{prevfile}")
     return open(
-        "/home/elie/pythonprojects/website/app/usbadistance/add.html", "r"
+        "C:/users/elie/pythonprojects/website/app/usbadistance/add.html", "r"
     ).read() % ("files/path/" + prevfile,)
 
 
 @app.route("/files/")
 def welcome():
     return open(
-        "/home/elie/pythonprojects/website/app/usbadistance/welcome.html", "r"
+        "C:/users/elie/pythonprojects/website/app/usbadistance/welcome.html", "r"
     ).read()
 
 
@@ -289,7 +290,7 @@ def logout():
 def imgfile(string):
     try:
         return flask.send_file(
-            r"/home/elie/pythonprojects/website/app/templates/usb/" + string
+            r"C:/users/elie/pythonprojects/website/app/templates/usb/" + string
         )
     except FileNotFoundError:
         return ""
@@ -301,12 +302,12 @@ def imgfile(string):
 def about():
     projects = eval(
         open(
-            "/home/elie/pythonprojects/website/app/templates/about/database", "r"
+            "C:/users/elie/pythonprojects/website/app/templates/about/database", "r"
         ).read()
     )
     return flask.render_template_string(
         open(
-            "/home/elie/pythonprojects/website/app/templates/about/about.html", "r"
+            "C:/users/elie/pythonprojects/website/app/templates/about/about.html", "r"
         ).read(),
         projects=projects,
         cont=0,
@@ -317,18 +318,18 @@ def about():
 def project(pk):
     thisproject = eval(
         open(
-            "/home/elie/pythonprojects/website/app/templates/about/database", "r"
+            "C:/users/elie/pythonprojects/website/app/templates/about/database", "r"
         ).read()
     )[1][pk - 1]
     if isinstance(thisproject["longdescription"], list):
         projects = eval(
             open(
-                "/home/elie/pythonprojects/website/app/templates/about/database", "r"
+                "C:/users/elie/pythonprojects/website/app/templates/about/database", "r"
             ).read()
         )
         return flask.render_template_string(
             open(
-                "/home/elie/pythonprojects/website/app/templates/about/about.html",
+                "C:/users/elie/pythonprojects/website/app/templates/about/about.html",
                 "r",
             ).read(),
             projects=projects,
@@ -336,7 +337,7 @@ def project(pk):
         )
     return flask.render_template_string(
         open(
-            "/home/elie/pythonprojects/website/app/templates/about/projects.html",
+            "C:/users/elie/pythonprojects/website/app/templates/about/projects.html",
             "r",
         ).read(),
         project=thisproject,
@@ -354,7 +355,7 @@ def welcomehere():
                 [
                     i
                     for i in os.listdir(
-                        r"/home/elie/pythonprojects/website/app/templates/usb/"
+                        r"C:/users/elie/pythonprojects/website/app/templates/usb/"
                     )
                     if i.startswith("background") and i.endswith(".jpg")
                 ]
@@ -362,17 +363,17 @@ def welcomehere():
         )
     )
     return flask.render_template_string(
-        open("/home/elie/pythonprojects/website/app/welcome.html", "r").read(),
+        open("C:/users/elie/pythonprojects/website/app/welcome.html", "r").read(),
         background=background,
     )
 
 
 @app.route("/todo/")
 def todo():
-    file = open("/home/elie/desktop/scripts/todo.txt", "r").read()
+    file = open("C:/users/elie/desktop/scripts/todo.txt", "r").read()
     file = file.split("\\")
     return flask.render_template_string(
-        open("/home/elie/pythonprojects/website/app/todo.html", "r").read(),
+        open("C:/users/elie/pythonprojects/website/app/todo.html", "r").read(),
         file=file,
     )
 
@@ -392,13 +393,13 @@ def cmd():
             za_command = unquote(flask.request.form["command"])
             stdin = flask.request.form["stdin"]
             stdin = stdin.split('\n')
-            open('/home/elie/pythonprojects/website/app/.sh', 'w').write(za_command)
-            os.system("chmod +x /home/elie/pythonprojects/website/app/.sh")
+            open('C:/users/elie/pythonprojects/website/app/.sh', 'w').write(za_command)
+            os.system("chmod +x C:/users/elie/pythonprojects/website/app/.sh")
             process
             
                 return flask.jsonify({"result": re.sub(r'(\x9B|\x1B\[)[0-?]*[ -/]*[@-~]',
                                                        '', process.stdout.read(), flags=re.IGNORECASE)})
-    return open("/home/elie/pythonprojects/website/app/cmd.html", "r").read()"""
+    return open("C:/users/elie/pythonprojects/website/app/cmd.html", "r").read()"""
 
 
 ############################################ PAGE DE BASE ############################################
@@ -413,7 +414,7 @@ def error(err):
         500: "Erreur interne (erreur dans le code ou impossible d'acc&eacute;der &agrave; ce fichier)",
     }
     return flask.render_template_string(
-        open("/home/elie/pythonprojects/website/app/error.html", "r").read(),
+        open("C:/users/elie/pythonprojects/website/app/error.html", "r").read(),
         erreur=err,
         message=errors[err],
     )

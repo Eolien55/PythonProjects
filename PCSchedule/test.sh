@@ -1,1 +1,1 @@
-python "/home/elie/pythonprojects/encyclopedia/assistant.py"
+python "C:/users/elie/pythonprojects/encyclopedia/assistant.py"
