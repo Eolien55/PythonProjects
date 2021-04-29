@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "folders": [
         {
@@ -6,3 +7,10 @@
     ],
     "settings": {}
 }
+=======
+{"folders": [
+        {
+            "path": "."
+        }
+    ], "settings": {}}
+>>>>>>> win

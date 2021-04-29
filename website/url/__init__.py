@@ -21,5 +21,5 @@ migrate = Migrate(app, db)
 
 import website.url.views
 
-os.chdir("c:/users/elie/pythonprojects/website/url")
+os.chdir("/home/elie/pythonprojects/website/url")
 db.create_all()

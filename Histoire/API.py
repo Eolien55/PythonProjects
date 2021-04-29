@@ -1,6 +1,6 @@
 import os
 
-os.system("cd c:/users/elie/pythonprojects/histoire")
+os.system("cd /home/elie/pythonprojects/histoire")
 
 
 class api:
