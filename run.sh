@@ -24,6 +24,7 @@ sudo apt install -y nginx
 cp key ~/.ssh
 cp key.pub ~/.ssh
 ssh-add ~/.ssh/key
+chmod +x files yt-dl yt-gui
 sudo cp files /bin
 sudo cp yt-dl /bin
 sudo cp yt-gui /bin
