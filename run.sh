@@ -11,11 +11,20 @@ pip install pipreqs
 cd /home/elie/pythonprojects
 pipreqs . --force
 pip install ipython jupyter black gunicorn -r requirements.txt
-echo '# some more aliases
-alias pip-="pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"' >> ~/.bashrc
+echo 
+'# some more aliases
+alias pip-="pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
+alias o="xdg-open $@' >> ~/.bashrc
 git config --global alias.tree 'log --all --decorate --oneline --graph'
 sudo cp vimsettings /etc/vim/vimrc
 curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
 sudo apt install -y code
 sudo apt install -y nginx
+cp key ~/.ssh
+cp key.pub ~/.ssh
+ssh-add ~/.ssh/key
+sudo cp files /bin
+sudo cp yt-dl /bin
+sudo cp yt-gui /bin
+
