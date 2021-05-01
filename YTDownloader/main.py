@@ -12,12 +12,21 @@ user = os.getlogin()
 
 def run():
     link = entry.get()
+    if "help" in link:
+        if link.index("help") == 0:
+            messagebox.showinfo(
+                "YoutubeDownloader",
+                "search:[query]   will replace search:[query] by the url of a video that matches with the query\n\nsoundonly:    download a mp3 instead of a mp4\n\nGlobally, it downloads videos that have the good URL",
+            )
+            st.set("")
+            entry.update()
+            return
+
     soundonly = "soundonly:" in link
     if "search:" in link:
         link = (re.sub(r"(^|:).+\:", "", link),)
     else:
         link = re.sub(r"(^|:).+\:", "", link)
-
     try:
         rundownload(link, soundonly)
     except Exception as e:

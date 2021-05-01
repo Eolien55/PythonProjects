@@ -18,7 +18,7 @@ def run(link, soundonly=False):
                 except FileExistsError:
                     pass
                 finally:
-                    print(f"OK, let's download '{unescape(yt.title)}'")
+                    print(f"OK, let's download '{unescape(yt.title)}', with a resolution of {ys.resolution}")
                     ys.download(r"/home/elie/Desktop/YoutubeVideos")
             else:
                 yt = Playlist(link)
@@ -29,7 +29,7 @@ def run(link, soundonly=False):
                         r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                     )
                 for ys in yt.videos:
-                    print(f"OK, let's download '{unescape(ys.title)}'")
+                    print(f"OK, let's download '{unescape(ys.title)}, with a resolution of {ys.resolution}")
                     ys.streams.get_highest_resolution().download(
                         r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                     )
@@ -106,15 +106,20 @@ def run(link, soundonly=False):
             run(link, soundonly)
 
 
-params = {i: True for i in sys.argv if i.startswith("-")}
-if "-h" in params.keys() or "--help" in params.keys():
+if "-h" in sys.argv or "--help" in sys.argv:
     print(
-        "Ok, so it downloads youtube videos (or playlists) and you can set --soundonly to have an mp3."
+            """
+            SYNOPSIS : yt-dl [url | search [query] ] [OPTIONS]
+                        Download the video that has the specified url or download a video that matches with the query
+            OPTIONS :
+                        -s --soundonly          download the video, but as a .mp3
+                        -h --help               shows this
+            """
     )
     exit()
-if "--search" in params.keys():
+if "search" in sys.argv[:2]:
     keys = sys.argv
-    link = (keys[keys.index("--search") + 1].replace("+", " "),)
+    link = (keys[keys.index("search") + 1].replace("+", " "),)
 else:
     link = sys.argv[1]
-run(link, soundonly=bool(params.get("--soundonly")))
+run(link, soundonly="--soundonly" in sys.argv)
