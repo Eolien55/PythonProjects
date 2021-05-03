@@ -46,14 +46,15 @@ def menu(file="/"):
     if "allowed/" in file and file.index("allowed/") < 2:
         file.replace("allowed/", "/home/elie/Documents/")
     if not os.path.exists(file):
-        file = file.replace("+", " ")
-    if not os.path.exists(file):
         file = unquote(file)
+    if not os.path.exists(file):
+        file = file.replace("+", " ")
     if not os.path.exists(file):
         return (
             open(
                 "/home/elie/pythonprojects/website/app/usbadistance/404.html", "r"
-            ).read(),
+            ).read()
+            % file,
             404,
         )
     if os.path.isdir(file):

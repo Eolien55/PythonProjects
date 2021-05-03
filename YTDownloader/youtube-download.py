@@ -18,7 +18,9 @@ def run(link, soundonly=False):
                 except FileExistsError:
                     pass
                 finally:
-                    print(f"OK, let's download '{unescape(yt.title)}', with a resolution of {ys.resolution}")
+                    print(
+                        f"OK, let's download '{unescape(yt.title)}', with a resolution of {ys.resolution}"
+                    )
                     ys.download(r"/home/elie/Desktop/YoutubeVideos")
             else:
                 yt = Playlist(link)
@@ -29,7 +31,9 @@ def run(link, soundonly=False):
                         r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                     )
                 for ys in yt.videos:
-                    print(f"OK, let's download '{unescape(ys.title)}, with a resolution of {ys.resolution}")
+                    print(
+                        f"OK, let's download '{unescape(ys.title)}, with a resolution of {ys.streams.get_highest_resolution().resolution}"
+                    )
                     ys.streams.get_highest_resolution().download(
                         r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(yt.title))
                     )
@@ -108,7 +112,7 @@ def run(link, soundonly=False):
 
 if "-h" in sys.argv or "--help" in sys.argv:
     print(
-            """
+        """
             SYNOPSIS : yt-dl [url | search [query] ] [OPTIONS]
                         Download the video that has the specified url or download a video that matches with the query
             OPTIONS :
