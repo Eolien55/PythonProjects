@@ -254,7 +254,7 @@ def main():
     )
     finished = False
     pg.display.set_caption("Sudoku")
-    im = pg.image.load("/media/elie/ui/Users/Elie/PythonProjects/sudoku/icon.png")
+    im = pg.image.load("/media/elie/ui/Users/elie/PythonProjects/sudoku/icon.png")
     pg.display.set_icon(im)
     key = None
     while not finished:

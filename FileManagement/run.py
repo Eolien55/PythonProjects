@@ -19,7 +19,7 @@ for matiere in run.matiere:
 while True:
     run.check()
     run.check(r"/home/elie/Documents/usb")
-    os.system("black /home/elie/pythonprojects")
+    # os.system("black /home/elie/pythonprojects")
     if not val % 600:
         os.system("""notify-send "Vos fichiers ont bien \u00e9t\u00e9 rang\u00e9s" """)
     val += 1

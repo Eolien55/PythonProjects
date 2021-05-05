@@ -36,7 +36,7 @@ def redirect(realurl):
 def returnfile(file):
     try:
         return flask.send_file(
-            r"C:\Users\Elie\PythonProjects\website\app/templates\usb/" + file
+            r"C:\Users\elie\PythonProjects\website\app/templates\usb/" + file
         )
     except FileNotFoundError:
         return ""

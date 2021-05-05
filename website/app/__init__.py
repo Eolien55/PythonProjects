@@ -7,13 +7,20 @@ from werkzeug.utils import secure_filename
 import os
 import subprocess
 import re
+import time
 
 __version__ = "1.0.0"
 import flask
 
 app = flask.Flask(__name__)
 
-password = "052cf1ebd71d676a64f2e4a8926155702996989cba7a974133a88ec996878960db0c782643e25c3465db0fcc329417bc5ae4eb99a14b8606d63018aae9cbe05b"
+iplist = {"timestamp": time.time()}
+
+password = [
+    "052cf1ebd71d676a64f2e4a8926155702996989cba7a974133a88ec996878960db0c782643e25c3465db0fcc329417bc5ae4eb99a14b8606d63018aae9cbe05b",
+    "3cca0e5d48a670fd48bfc64d337df4bde11122eab1fdf7d1078525acea5ee046ee74bdb9ba14abc41e05c0d2bcea047d898d6167886c5ec5b176d9d70e2d8436",
+]
+
 app.secret_key = "oof"
 UPLOAD_FOLDER = "/home/elie/Documents/usb"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -25,9 +32,24 @@ def sessionlive():
     app.permanent_session_lifetime = datetime.timedelta(minutes=5)
 
 
+############################################ LOGIN ############################################
+
+
+def login():
+    global iplist
+    ip = flask.request.environ["HTTP_X_FORWARDED_FOR"]
+    if time.time() - iplist["timestamp"] >= 300:
+        iplist = {"timestamp": time.time()}
+        return False
+    if ip not in iplist:
+        return False
+    return iplist[ip][1]
+
+
 ############################################ USB A DISTANCE ############################################
 
 
+@app.route("/files/path/", methods=["GET"])
 @app.route("/files/path/<path:file>", methods=["GET"])
 def menu(file="/"):
     file = "/" + file
@@ -36,12 +58,7 @@ def menu(file="/"):
         file = file.replace("allowed/", "/home/elie/Documents/")
         isallowed = True
     else:
-        if "username" not in flask.session:
-            return flask.redirect("/files/login")
-        elif (
-            not hashlib.sha512(bytes(flask.session["username"], "UTF-8")).hexdigest()
-            == password
-        ):
+        if not login():
             return flask.redirect("/files/login")
     if "allowed/" in file and file.index("allowed/") < 2:
         file.replace("allowed/", "/home/elie/Documents/")
@@ -158,12 +175,7 @@ def redir():
 @app.route("/files/add/<path:prevfile>", methods=["GET", "POST"])
 def imma_upload_ur_mother(prevfile):
     prevfile = "/" + prevfile
-    if "username" not in flask.session:
-        return flask.redirect("/files/login")
-    elif (
-        not hashlib.sha512(bytes(flask.session["username"], "UTF-8")).hexdigest()
-        == password
-    ):
+    if not login():
         return flask.redirect("/files/login")
     if not prevfile:
         prevfile = "/home"
@@ -177,8 +189,8 @@ def imma_upload_ur_mother(prevfile):
         # submit an empty part without filename
         if file.filename == "":
             return flask.redirect(flask.request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+        if file and "allowed_file(file.filename)":
+            filename = file.filename  # secure_filename(file.filename)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             return flask.redirect(f"/files/path/{prevfile}")
     return open(
@@ -194,96 +206,52 @@ def welcome():
 
 
 @app.route("/files/login/", methods=["GET", "POST"])
-def login():
-    if "tries" in flask.session:
-        if flask.session["tries"] == 4:
-            return (
-                """
-            <html>
-            <head>
-            <title>Trop d'erreurs</title>
-            <link rel="preconnect" href="https://fonts.gstatic.com">
-            <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-            <style>
-            body {
-                font-size:60px;
-                color:#009cd1;
-                font-family: 'Roboto', sans-serif;
-                background: url('/images/backgroundn0.jpg');
-                background-size:  cover;
-            }
-            h1 {
-                position:relative;
-                text-align:center;
-                margin-top:100px;
-                margin-bottom:100px;
-            }
-            </style>
-            </head>
-            <body>
-            <h1>
-            Trop d'erreurs, par s&eacute;curit&eacute;, tu ne passes pas.
-            </html>""",
-                403,
-            )  # Page d'erreur
+def log_in():
+    global iplist
+    login()
+    ip = flask.request.environ["HTTP_X_FORWARDED_FOR"]
+    if not ip in iplist:
+        iplist.update({ip: [0, 0]})
+    # return iplist
+    # return flask.request.environ["HTTP_X_FORWARDED_FOR"]
+    if iplist[ip][0] >= 4:
+        file = open(
+            "/home/elie/pythonprojects/website/app/usbadistance/too_much_tries.html",
+            "r",
+        )
+        file_con = file.read()
+        file.close()
+        return file_con  # Page d'erreur
     if flask.request.method == "GET":
-        return """
-        <html>
-        <head>
-        <title>login</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-        <style>
-        body {
-                color:white;
-                font-family: 'Roboto', sans-serif;
-                background: url('/images/backgroundn0.jpg');
-                background-size:  cover;
-            }
-        input {
-            border: none;
-            background:transparent;
-            color:#009cd1;
-            font-size: 50px;
-        }
-        form {
-            position:relative;
-            margin-left:300px;
-            margin-top:300px;
-            margin-right:300px;
-            margin-bottom:300px;
-        }
-        </style>
-        </head>
-        <body>
-        <form action = "" method = "post">
-      <input type = "password" name = username style="background-color:white;">
-      <input type = submit value = Login>
-   </form>
-   </body>
-   </html>
-   """
+        file = open(
+            "/home/elie/pythonprojects/website/app/usbadistance/login.html", "r"
+        )
+        file_con = file.read()
+        file.close()
+        return file_con
     if (
         hashlib.sha512(bytes(flask.request.form["username"], "UTF-8")).hexdigest()
-        == password
+        in password
     ):
-        flask.session["username"] = flask.request.form["username"]
+        iplist[ip][1] = 1
         return flask.redirect("/files")
     else:
-        try:
-            flask.session["tries"] += 1
-        except KeyError:
-            flask.session["tries"] = 0
+        iplist[ip][0] += 1
         return """<body style="color:white;font-family:sans-serif;background: url('/images/backgroundn0.jpg');background-size:  cover;">invalid password</body>"""
 
 
 @app.route("/files/logout")
 def logout():
+    global iplist
     try:
-        flask.session.pop("username", None)
+        ip = flask.request.environ["HTTP_X_FORWARDED_FOR"]
+    except:
+        ip = flask.request.remote_addr
+    try:
+        iplist[ip][1] = 0
     except Exception as e:
-        print(e)
-    return ""
+        pass
+    return flask.redirect("/files/")
 
 
 @app.route("/images/<path:string>")
@@ -376,30 +344,6 @@ def todo():
         open("/home/elie/pythonprojects/website/app/todo.html", "r").read(),
         file=file,
     )
-
-
-"""@app.route("/cmd/", methods=["GET", "POST"])
-def cmd():
-    if "username" not in flask.session:
-        return flask.redirect("/files/login")
-    elif (
-        not hashlib.sha512(
-            bytes(flask.session["username"], "UTF-8")).hexdigest()
-        == password
-    ):
-        return flask.redirect("/files/login")
-    if flask.request.method == "POST":
-        if 1:
-            za_command = unquote(flask.request.form["command"])
-            stdin = flask.request.form["stdin"]
-            stdin = stdin.split('\n')
-            open('/home/elie/pythonprojects/website/app/.sh', 'w').write(za_command)
-            os.system("chmod +x /home/elie/pythonprojects/website/app/.sh")
-            process
-            
-                return flask.jsonify({"result": re.sub(r'(\x9B|\x1B\[)[0-?]*[ -/]*[@-~]',
-                                                       '', process.stdout.read(), flags=re.IGNORECASE)})
-    return open("/home/elie/pythonprojects/website/app/cmd.html", "r").read()"""
 
 
 ############################################ PAGE DE BASE ############################################
