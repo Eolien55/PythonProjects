@@ -39,7 +39,9 @@ def login():
     global iplist
     ip = flask.request.environ.get("HTTP_X_FORWARDED_FOR")
     if not ip:
-        return 0
+        ip = flask.request.environ.get("REMOTE_ADDR")
+        if not ip:
+            return 0
     if time.time() - iplist["timestamp"] >= 300:
         iplist = {"timestamp": time.time()}
         return False
@@ -128,7 +130,9 @@ def log_in():
     global iplist
     ip = flask.request.environ.get("HTTP_X_FORWARDED_FOR")
     if not ip:
-        flask.abort(501)
+        ip = flask.request.environ.get("REMOTE_ADDR")
+        if not ip:
+            flask.abort(501)
     if not ip in iplist:
         iplist.update({ip: [0, 0]})
     if iplist[ip][0] >= 4:
@@ -163,7 +167,7 @@ def logout():
     try:
         ip = flask.request.environ["HTTP_X_FORWARDED_FOR"]
     except:
-        ip = flask.request.remote_addr
+        ip = flask.request.environ.get("REMOTE_ADDR")
     try:
         iplist[ip][1] = 0
     except Exception as e:
@@ -261,14 +265,15 @@ def welcomehere():
 @app.errorhandler(HTTPException)
 def error(err):
     err = err.code
-    errors = {
-        404: "Cette URL n'existe pas",
-        500: "Erreur interne (erreur dans le code ou impossible d'acc&eacute;der &agrave; ce fichier)",
-        501: "Erreur d'ip... MeRcI lE D\u00e9VeLoPpEuR, hEiN !!! (en vrai, 501 c pas ca mais on s'en fout)",
-    }
+    with open("/home/elie/pythonprojects/website/app/errors.json", "r") as file:
+        errors = flask.json.loads(file.read())
     with open("/home/elie/pythonprojects/website/app/error.html", "r") as file:
-        return flask.render_template_string(
-            file.read(),
-            erreur=err,
-            message=errors[err],
+        return (
+            flask.render_template_string(
+                file.read(),
+                erreur=err,
+                message=errors[str(err)][1],
+                short=errors[str(err)][0],
+            ),
+            err,
         )
