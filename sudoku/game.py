@@ -244,9 +244,10 @@ def main():
         url = "hard"
     else:
         url = "expert"
-    res = req.get(f"https://sudoku.com/api/getLevel/{url}")
-    res = json.loads(res.text)
-    board = [int(i) for i in res["desc"][0]]
+    res = req.get(f"https://sudoku.com/api/level/{url}")
+    # res = json.loads(res.text)
+    # board = [int(i) for i in res["desc"][0]]
+    board = [0] * 81
     board = Board(board)
     pg.font.init()
     win = pg.display.set_mode(
@@ -254,8 +255,8 @@ def main():
     )
     finished = False
     pg.display.set_caption("Sudoku")
-    im = pg.image.load("/media/elie/ui/Users/elie/PythonProjects/sudoku/icon.png")
-    pg.display.set_icon(im)
+    # im = pg.image.load("/media/elie/ui/Users/elie/PythonProjects/sudoku/icon.png")
+    # pg.display.set_icon(im)
     key = None
     while not finished:
         for event in pg.event.get():

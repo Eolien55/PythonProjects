@@ -1,0 +1,4 @@
+[2021-05-06 22:09:29 +0200] [4142] [INFO] Starting gunicorn 20.1.0
+[2021-05-06 22:09:29 +0200] [4142] [INFO] Listening at: http://127.0.0.1:5000 (4142)
+[2021-05-06 22:09:29 +0200] [4142] [INFO] Using worker: sync
+[2021-05-06 22:09:29 +0200] [4323] [INFO] Booting worker with pid: 4323

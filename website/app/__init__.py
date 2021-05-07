@@ -37,7 +37,9 @@ def sessionlive():
 
 def login():
     global iplist
-    ip = flask.request.environ["HTTP_X_FORWARDED_FOR"]
+    ip = flask.request.environ.get("HTTP_X_FORWARDED_FOR")
+    if not ip:
+        return 0
     if time.time() - iplist["timestamp"] >= 300:
         iplist = {"timestamp": time.time()}
         return False
@@ -50,130 +52,46 @@ def login():
 
 
 @app.route("/files/path/", methods=["GET"])
-@app.route("/files/path/<path:file>", methods=["GET"])
-def menu(file="/"):
-    file = "/" + file
-    isallowed = False
-    if "allowed/" in file and file.index("allowed/") < 2:
-        file = file.replace("allowed/", "/home/elie/Documents/")
-        isallowed = True
-    else:
+@app.route("/files/path/<path:path>", methods=["GET"])
+def files(path="/"):
+    if not path.startswith("allowed"):
+        allowed = False
+        path = "/" + path
         if not login():
             return flask.redirect("/files/login")
-    if "allowed/" in file and file.index("allowed/") < 2:
-        file.replace("allowed/", "/home/elie/Documents/")
-    if not os.path.exists(file):
-        file = unquote(file)
-    if not os.path.exists(file):
-        file = file.replace("+", " ")
-    if not os.path.exists(file):
-        return (
-            open(
-                "/home/elie/pythonprojects/website/app/usbadistance/404.html", "r"
-            ).read()
-            % file,
-            404,
-        )
-    if os.path.isdir(file):
-        try:
-            previous = file[::-1][file[::-1].index("/") + 1 :][::-1]
-        except ValueError:
-            return (
-                open(
-                    "/home/elie/pythonprojects/website/app/usbadistance/404.html",
-                    "r",
-                ).read(),
-                404,
-            )
-        file2 = open(
-            "/home/elie/pythonprojects/website/app/usbadistance/a.html", "r"
-        ).read()
-        temp = """%s"""
-        for cd, subs, files in os.walk(file):
-            if cd != file:
-                break
-            for i in subs:
-                temp = (
-                    temp
-                    % (
-                        (
-                            """<a href="/files/path/%s" style="color: #FFFFFF; font-size:25px"><div class="file">\n<p style="margin-left:50px;" class="%s"> %s </p></div></a>"""
-                            % (
-                                file + "/" + i.replace(" ", "+")
-                                if not isallowed
-                                else "allowed"
-                                + "/"
-                                + file[
-                                    file.index("/home/elie/Documents/")
-                                    + len("/home/elie/Documents/") :
-                                ]
-                                + "/"
-                                + i.replace(" ", "+"),
-                                "%s",
-                                i,
-                            )
-                        )
-                    )
-                    % ("folder" if os.path.isdir(file + "/" + i) else "afile")
-                    + "%s"
-                )
-            for i in files:
-                temp = (
-                    temp
-                    % (
-                        (
-                            """<a href="/files/path/%s" style="color: #FFFFFF; font-size:25px">\n<div class="file">\n<p style="margin-left:50px;" class="%s"> %s </p>\n</div>\n</a>\n"""
-                            % (
-                                file + "/" + i.replace(" ", "+")
-                                if not isallowed
-                                else "allowed"
-                                + "/"
-                                + file[
-                                    file.index("/home/elie/Documents/")
-                                    + len("/home/elie/Documents/") :
-                                ]
-                                + "/"
-                                + i.replace(" ", "+"),
-                                "%s",
-                                i,
-                            )
-                        )
-                    )
-                    % ("folder" if os.path.isdir(file + "/" + i) else "afile")
-                    + "%s"
-                )
-        temp = "".join(temp)
-        temp = temp.replace("%s", "")
-        file2 = file2 % (
-            ("/files/add/%s" % file),
-            "/files/path/" + previous.replace(" ", "+")
-            if not isallowed
-            else "files/path/allowed"
-            + "/"
-            + file[
-                file.index("/home/elie/Documents/") + len("/home/elie/Documents/") :
-            ][::-1][file[::-1].index("/") + 1 :][::-1],
-            temp,
-        )
-        return file2
     else:
-        try:
-            return flask.send_file(file)
-        except FileNotFoundError:
-            return flask.send_file(file.replace("+", " "))
+        allowed = True
+        path = path.replace("allowed", "/home/elie/Documents")
+    if not os.path.exists(path):
+        path = unquote(path)
+    if not os.path.exists(path):
+        file = open("/home/elie/pythonprojects/website/app/usbadistance/404.html", "r")
+        cont = file.read()
+        file.close()
+        return cont % path
+    if not os.path.isdir(path):
+        return flask.send_file(path)
+    parent = os.path.abspath(os.path.join(path, ".."))
+    if not "/home/elie/Documents" in parent and allowed:
+        parent = path
+    files = [i for i in os.listdir(path) if not os.path.isdir(path + "/" + i)]
+    folders = [i for i in os.listdir(path) if os.path.isdir(path + "/" + i)]
+    if allowed:
+        path = path.replace("/home/elie/Documents", "allowed")
+        parent = parent.replace("/home/elie/Documents", "allowed")
+    with open("/home/elie/pythonprojects/website/app/usbadistance/a.html", "r") as file:
+        return flask.render_template_string(
+            file.read(), parent=parent, files=files, folders=folders, path=path
+        )
 
 
 def allowed_file(filename):
     return bool(filename)
 
 
-@app.route("/files/add/", methods=["GET"])
-def redir():
-    return flask.redirect("/files/add//home")
-
-
+@app.route("/files/add/", methods=["GET", "POST"])
 @app.route("/files/add/<path:prevfile>", methods=["GET", "POST"])
-def imma_upload_ur_mother(prevfile):
+def imma_upload_ur_mother(prevfile=""):
     prevfile = "/" + prevfile
     if not login():
         return flask.redirect("/files/login")
@@ -208,12 +126,11 @@ def welcome():
 @app.route("/files/login/", methods=["GET", "POST"])
 def log_in():
     global iplist
-    login()
-    ip = flask.request.environ["HTTP_X_FORWARDED_FOR"]
+    ip = flask.request.environ.get("HTTP_X_FORWARDED_FOR")
+    if not ip:
+        flask.abort(501)
     if not ip in iplist:
         iplist.update({ip: [0, 0]})
-    # return iplist
-    # return flask.request.environ["HTTP_X_FORWARDED_FOR"]
     if iplist[ip][0] >= 4:
         file = open(
             "/home/elie/pythonprojects/website/app/usbadistance/too_much_tries.html",
@@ -330,20 +247,11 @@ def welcomehere():
             )
         )
     )
-    return flask.render_template_string(
-        open("/home/elie/pythonprojects/website/app/welcome.html", "r").read(),
-        background=background,
-    )
-
-
-@app.route("/todo/")
-def todo():
-    file = open("/home/elie/desktop/scripts/todo.txt", "r").read()
-    file = file.split("\\")
-    return flask.render_template_string(
-        open("/home/elie/pythonprojects/website/app/todo.html", "r").read(),
-        file=file,
-    )
+    with open("/home/elie/pythonprojects/website/app/welcome.html", "r") as file:
+        return flask.render_template_string(
+            file.read(),
+            background=background,
+        )
 
 
 ############################################ PAGE DE BASE ############################################
@@ -356,9 +264,11 @@ def error(err):
     errors = {
         404: "Cette URL n'existe pas",
         500: "Erreur interne (erreur dans le code ou impossible d'acc&eacute;der &agrave; ce fichier)",
+        501: "Erreur d'ip... MeRcI lE D\u00e9VeLoPpEuR, hEiN !!! (en vrai, 501 c pas ca mais on s'en fout)",
     }
-    return flask.render_template_string(
-        open("/home/elie/pythonprojects/website/app/error.html", "r").read(),
-        erreur=err,
-        message=errors[err],
-    )
+    with open("/home/elie/pythonprojects/website/app/error.html", "r") as file:
+        return flask.render_template_string(
+            file.read(),
+            erreur=err,
+            message=errors[err],
+        )

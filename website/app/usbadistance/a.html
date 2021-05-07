@@ -1,80 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>USB</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
     <style>
-    html{
-    font-family:Roboto,sans-serif;
-    }
-    body{
-    color: white;
-    background: url('/images/backgroundn0.jpg');
-    background-size:  cover;
-    font-family:Roboto, sans-serif;
-    margin: 0 auto;
-    overflow: auto;
-    }
-    #STICKY {
-    display:inline;
-    position: fixed;
-    top: 0px;
-    right: 0px;
-    left: 0px;
-    margin: 0 auto;
-    background: url('/images/backgroundn0.jpg');
-    background-size:  cover;
-    padding:-5;
-    z-index:1;
-    }
-    #norm {
-    position: relative;
-    margin-top:130px;
-    }
-    .file {
-    line-height:50px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    background-color: #00000000;
-    transition: background-color 0.3s;
-    }
-    a:link {
-    text-decoration:none;
-    }
-    .file:hover {
-    background-color: #00000030;
-    }
-    .folder:before {
-    display: inline-block;
-    -moz-transform: scale(2);
-    width:25px;
-    content:url(/images/toolWindowProject_dark.svg);
-    }
-    .afile:before{
-    display: inline-block;
-    -moz-transform: scale(2);
-    width: 25px;
-    content:url(/images/text.svg);
-    }
-</style>
-</head>
-<body>
-<div id="STICKY">
-    <h1 id="fichier" style="color: #009cd1; font-size: 50px;">Fichiers /
-        <a href="/..%s" id="bt">
-            <button type="submit" style="background: transparent;border:none;color: #FFFFFF;font-size:50px;font-family: 'Roboto',sans-serif;">Ajouter un fichier / </button>
+      html {
+        font-family: Roboto, sans-serif;
+      }
+      body {
+        color: white;
+        background: url("/images/backgroundn0.jpg");
+        background-size: cover;
+        font-family: Roboto, sans-serif;
+        margin: 0 auto;
+        overflow: auto;
+      }
+      #STICKY {
+        display: inline;
+        position: fixed;
+        top: 0px;
+        right: 0px;
+        left: 0px;
+        margin: 0 auto;
+        background: url("/images/backgroundn0.jpg");
+        background-size: cover;
+        padding: -5;
+        z-index: 1;
+      }
+      #norm {
+        position: relative;
+        margin-top: 130px;
+      }
+      .file {
+        line-height: 50px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        background-color: #00000000;
+        transition: background-color 0.3s;
+      }
+      a:link {
+        text-decoration: none;
+      }
+      .file:hover {
+        background-color: #00000030;
+      }
+      .folder:before {
+        display: inline-block;
+        -moz-transform: scale(2);
+        width: 25px;
+        content: url(/images/toolWindowProject_dark.svg);
+      }
+      .afile:before {
+        display: inline-block;
+        -moz-transform: scale(2);
+        width: 25px;
+        content: url(/images/text.svg);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="STICKY">
+      <h1 id="fichier" style="color: #009cd1; font-size: 50px">
+        Fichiers /
+        <a href="/files/add/{{ path }}" id="bt">
+          <button
+            type="submit"
+            style="
+              background: transparent;
+              border: none;
+              color: #ffffff;
+              font-size: 50px;
+              font-family: 'Roboto', sans-serif;
+            "
+          >
+            Ajouter un fichier /
+          </button>
         </a>
-        <a id="previous" href="/../%s">
-        <button type="submit" style="color:#FFFFFF;font-size:50px;background:transparent;border:none;font-family: 'Roboto',sans-serif;">
+        <a id="previous" href="/files/path/{{ parent }}">
+          <button
+            type="submit"
+            style="
+              color: #ffffff;
+              font-size: 50px;
+              background: transparent;
+              border: none;
+              font-family: 'Roboto', sans-serif;
+            "
+          >
             Pr&eacute;c&eacute;dent dossier
-        </button>
-    </a>
-    </h1>
-    <hr>
-</div>
-<div id="norm">%s<hr>
-</div>
-</body>
+          </button>
+        </a>
+      </h1>
+      <hr />
+    </div>
+    <div id="norm">
+      <hr />
+      {% for fold in folders %}
+      <a
+        href="/files/path/{{ path + "/" + fold }}"
+        style="color: #ffffff; font-size: 25px"
+      >
+        <div class="file">
+          <p class="folder" style="margin-left: 50px">{{ fold }}</p>
+        </div>
+      </a>
+      {% endfor %}
+      {% for file in files %}
+      <a
+        href="/files/path/{{ path + "/" + file }}"
+        style="color: #ffffff; font-size: 25px"
+      >
+        <div class="file">
+          <p class="afile" style="margin-left: 50px">{{ file }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </body>
 </html>
