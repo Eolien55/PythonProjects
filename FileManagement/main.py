@@ -1,6 +1,8 @@
 import time
 import os
 import shutil
+import traceback
+import re
 
 
 class ManageFileType:
@@ -37,13 +39,17 @@ class ManageFileType:
     def check(self, path=r"/home/elie/Documents/Scolaire"):
         for folder, a, files in os.walk(path):
             for file in files:
+                file = self.check_correct(file, folder)
                 try:
                     command = "self.command(%s" % (
-                        file[: file.index(".")]
+                        file[::-1][file[::-1].index(".") + 1 :][::-1]
                     ) + ",path=r'''{}/{}''',file='''{}''')".format(folder, file, file)
                     exec(command)
-                except:
+                except Exception as e:
+                    # error = traceback.format_exc()
+                    # print(error,file)
                     pass
+            # input()
 
     def command(
         self,
@@ -111,6 +117,16 @@ class ManageFileType:
         if m in self.matiere.keys():
             exec(run)
             print(f'File "{na}" has been moved to "{newpath}"')
+
+    @staticmethod
+    def check_correct(file, path):
+        if len(file.split(",")) != 2:
+            return file
+        if len(re.findall(r"('|\")", file)) >= 4:
+            newfile = re.sub(r"([^\^,])('|\")([^.,])", r"\1\3", file)
+            os.system(f'mv "{os.path.join(path,file)}" "{os.path.join(path,newfile)}"')
+            return newfile
+        return file
 
 
 ManageFileType().check()
