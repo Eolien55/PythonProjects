@@ -18,10 +18,9 @@ for matiere in run.matiere:
             )
         )
 while True:
-    os.system("git add .; git commit -m 'Save' --quiet; git push --quiet")
+    os.system("git add . >/dev/null 2>&1\ngit commit -m 'Save' >/dev/null 2>&1\ngit push >/dev/null 2>&1")
     run.check()
     run.check(r"/home/elie/Documents/usb")
-    # os.system("black /home/elie/pythonprojects")
     if not val % 600:
         os.system("""notify-send "Vos fichiers ont bien \u00e9t\u00e9 rang\u00e9s" """)
     val += 1

@@ -42,7 +42,7 @@ class ManageFileType:
                 file = self.check_correct(file, folder)
                 try:
                     command = "self.command(%s" % (
-                        file[::-1][file[::-1].index(".") + 1 :][::-1]
+                            ".".join(file.split(".")[:-1])
                     ) + ",path=r'''{}/{}''',file='''{}''')".format(folder, file, file)
                     exec(command)
                 except Exception as e:
@@ -77,7 +77,7 @@ class ManageFileType:
                         self.mois[time.ctime(os.path.getctime(path))[4:7]],
                     )
                 )
-            run = """shutil.move(path,r"/home/elie/Documents/Scolaire/%s/%s/%s/%s"%(time.ctime(os.path.getctime(path))[20:24],self.matiere[m],self.mois[time.ctime(os.path.getctime(path))[4:7]],na+file[file.index('.'):]))"""
+            run = """shutil.move(path,r"/home/elie/Documents/Scolaire/%s/%s/%s/%s"%(time.ctime(os.path.getctime(path))[20:24],self.matiere[m],self.mois[time.ctime(os.path.getctime(path))[4:7]],na+"."+file.split(".")[-1]))"""
         else:
             if not os.path.exists(
                 r"/home/elie/Documents/Scolaire/%s/%s/%s/%s"
@@ -97,7 +97,7 @@ class ManageFileType:
                         fold,
                     )
                 )
-            run = """shutil.move(path,r"/home/elie/Documents/Scolaire/%s/%s/%s/%s/%s"%(time.ctime(os.path.getctime(path))[20:24],self.matiere[m],self.mois[time.ctime(os.path.getctime(path))[4:7]],fold,na+file[file.index('.'):]))"""
+            run = """shutil.move(path,r"/home/elie/Documents/Scolaire/%s/%s/%s/%s/%s"%(time.ctime(os.path.getctime(path))[20:24],self.matiere[m],self.mois[time.ctime(os.path.getctime(path))[4:7]],fold,na+"."+file.split(".")[:-1]))"""
         newpath = (
             r"/home/elie/Documents/Scolaire/%s/%s/%s/%s"
             % (
@@ -123,8 +123,9 @@ class ManageFileType:
         if len(file.split(",")) != 2:
             return file
         if len(re.findall(r"('|\")", file)) >= 4:
-            newfile = re.sub(r"([^\^,])('|\")([^.,])", r"\1\3", file)
-            os.system(f'mv "{os.path.join(path,file)}" "{os.path.join(path,newfile)}"')
+            newfile = re.sub(r"([^^,])('|\")([^.,])", r"\1\3", file)
+            if file != newfile:
+                os.system(f'mv "{os.path.join(path,file)}" "{os.path.join(path,newfile)}" &>/dev/null')
             return newfile
         return file
 
