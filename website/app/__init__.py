@@ -67,10 +67,9 @@ def files(path="/"):
     if not os.path.exists(path):
         path = unquote(path)
     if not os.path.exists(path):
-        file = open("/home/elie/pythonprojects/website/app/usbadistance/404.html", "r")
-        cont = file.read()
-        file.close()
-        return cont % path
+        path = path + ".html"
+    if not os.path.exists(path):
+        flask.abort(404)
     if not os.path.isdir(path):
         return flask.send_file(path)
     parent = os.path.abspath(os.path.join(path, ".."))
@@ -246,7 +245,7 @@ def welcomehere():
                     for i in os.listdir(
                         r"/home/elie/pythonprojects/website/app/templates/usb/"
                     )
-                    if i.startswith("background") and i.endswith(".jpg")
+                    if re.match(r"background[0-9]+\.jpg", i)
                 ]
             )
         )

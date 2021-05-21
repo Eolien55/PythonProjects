@@ -1,8 +1,4 @@
-[2021-05-07 13:29:32 +0200] [21413] [INFO] Starting gunicorn 20.1.0
-[2021-05-07 13:29:32 +0200] [21413] [INFO] Listening at: http://127.0.0.1:5000 (21413)
-[2021-05-07 13:29:32 +0200] [21413] [INFO] Using worker: sync
-[2021-05-07 13:29:32 +0200] [21505] [INFO] Booting worker with pid: 21505
-[2021-05-07 14:12:51 +0200] [21413] [CRITICAL] WORKER TIMEOUT (pid:21505)
-[2021-05-07 14:12:53 +0200] [21505] [INFO] Worker exiting (pid: 21505)
-[2021-05-07 14:12:54 +0200] [21413] [WARNING] Worker with pid 21505 was terminated due to signal 9
-[2021-05-07 14:12:54 +0200] [22307] [INFO] Booting worker with pid: 22307
+[2021-05-21 14:15:01 +0200] [74840] [INFO] Starting gunicorn 20.1.0
+[2021-05-21 14:15:01 +0200] [74840] [INFO] Listening at: http://127.0.0.1:5000 (74840)
+[2021-05-21 14:15:01 +0200] [74840] [INFO] Using worker: sync
+[2021-05-21 14:15:01 +0200] [74923] [INFO] Booting worker with pid: 74923

@@ -7,7 +7,7 @@ user = os.getlogin()
 def run(link, soundonly=False):
     from html import unescape
     from pytube import YouTube, Playlist
-
+    print(link)
     if not soundonly:
         if not isinstance(link, tuple):
             if not link.startswith("https://www.youtube.com/playlist"):
