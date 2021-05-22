@@ -10,7 +10,7 @@ import re
 user = os.getlogin()
 
 
-def run():
+def run(event=None):
     link = entry.get()
     if "help" in link:
         if link.index("help") == 0:
@@ -21,7 +21,14 @@ def run():
             st.set("")
             entry.update()
             return
-
+    if event == "help":
+        messagebox.showinfo(
+            "YoutubeDownloader",
+            "search:[query]   will replace search:[query] by the url of a video that matches with the query\n\nsoundonly:    download a mp3 instead of a mp4\n\nGlobally, it downloads videos that have the good URL",
+        )
+        st.set("")
+        entry.update()
+        return
     soundonly = "soundonly:" in link
     if "search:" in link:
         link = (re.sub(r"(^|:).+\:", "", link),)
@@ -160,10 +167,11 @@ root.configure(background="#F6F4F2")
 root.title("YoutubeDownloader")
 root.resizable(False, False)
 st = tkinter.StringVar()
-label = tk.Label(root, text="Entrez l'URL")
+label = tk.Label(root, text="Enter the URL")
 label.grid(column=0, row=0)
 entry = tk.Entry(root, width=50, text=st)
+entry.bind("<Return>", run)
 entry.grid(column=0, row=1)
-bt = tk.Button(root, command=run, text="Télécharger")
+bt = tk.Button(root, command=lambda: run("help"), text="Help")
 bt.grid(column=0, row=2)
 root.mainloop()
