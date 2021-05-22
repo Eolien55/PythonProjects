@@ -163,6 +163,8 @@ def rundownload(link, soundonly=False):
 
 
 root = themes.ThemedTk(theme="arc")
+icon = tkinter.PhotoImage(os.path.join(os.path.abspath("."), "YouTube-Emblem.png"))
+root.wm_iconphoto(False, icon)
 root.configure(background="#F6F4F2")
 root.title("YoutubeDownloader")
 root.resizable(False, False)
