@@ -17,11 +17,20 @@ for matiere in run.matiere:
                 "{} = {}".format(matiere, run.matiere[matiere])
             )
         )
+
+show = True
+with open("/tmp/running_files_number", "r") as file:
+    number = file.read()
 while True:
-    os.system("git add . >/dev/null 2>&1\ngit commit -m 'Save' >/dev/null 2>&1\ngit push >/dev/null 2>&1")
+    os.system(
+        "git add . >/dev/null 2>&1\ngit commit -m 'Save' >/dev/null 2>&1\ngit push >/dev/null 2>&1"
+    )
     run.check()
     run.check(r"/home/elie/Documents/usb")
-    if not val % 600:
+    if show:
         os.system("""notify-send "Vos fichiers ont bien \u00e9t\u00e9 rang\u00e9s" """)
-    val += 1
+    show = False
     time.sleep(5)
+    with open("/tmp/running_files_number", "r") as file:
+        if number != file.read():
+            exit()
