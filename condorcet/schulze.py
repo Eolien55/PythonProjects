@@ -1,7 +1,7 @@
-from numpy import zeros
+from numpy import zeros, array
 
 
-def winner(p):
+def winner(p: array) -> array:
 
     results = []
     for i in range(len(p)):
@@ -16,7 +16,7 @@ def winner(p):
     return results
 
 
-def main(d):
+def main(d: array) -> list:
     p = zeros((len(d), len(d)))
     for i in range(len(d)):
         for j in range(len(d)):
