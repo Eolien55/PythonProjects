@@ -19,6 +19,8 @@ for matiere in run.matiere:
         )
 
 show = True
+if not os.path.exists("/tmp/running_files_number"):
+    open("/tmp/running_files_number", "w").write("0")
 with open("/tmp/running_files_number", "r") as file:
     number = file.read()
 while True:

@@ -3,10 +3,10 @@ import sys
 
 user = os.getlogin()
 
-
 def run(link, soundonly=False):
     from html import unescape
     from pytube import YouTube, Playlist
+
     print(link)
     if not soundonly:
         if not isinstance(link, tuple):
@@ -65,13 +65,36 @@ def run(link, soundonly=False):
                         r"/home/elie/Desktop/YoutubeVideos",
                         unescape(yt.title).replace(" ", "_"),
                     )
-                    video = VideoFileClip(
+                    with VideoFileClip(
                         r"/home/elie/Desktop/YoutubeVideos/%s.mp4"
-                        % (unescape(yt.title).replace(" ", "_").replace(".", ""))
-                    )
-                    video.audio.write_audiofile(
-                        r"/home/elie/Desktop/YoutubeVideos/%s.mp3"
-                        % (unescape(yt.title))
+                        % (
+                            unescape(yt.title)
+                            .replace(" ", "_")
+                            .replace(".", "")
+                            .replace("'", "")
+                            .replace('"', "")
+                            .replace("/", "")
+                            .replace(":", "").replace("|","").replace(",","")
+                        )
+                    ) as video:
+                        video.audio.write_audiofile(
+                            r"/home/elie/Desktop/YoutubeVideos/%s.mp3"
+                            % (unescape(yt.title))
+                        )
+                    os.remove(
+                        r"/home/elie/Desktop/YoutubeVideos/%s.mp4"
+                        % (
+                            unescape(yt.title)
+                            .replace(" ", "_")
+                            .replace(".", "")
+                            .replace("'", "")
+                            .replace('"', "")
+                            .replace("/", "")
+                            .replace(":", "")
+                            .replace("|", "")
+                            .replace(",","")
+
+                        )
                     )
             else:
                 ytP = Playlist(link)
@@ -87,16 +110,37 @@ def run(link, soundonly=False):
                         r"/home/elie/Desktop/YoutubeVideos/%s" % (unescape(ytP.title)),
                         unescape(yt.title).replace(" ", "_"),
                     )
-                    video = VideoFileClip(
+                    with VideoFileClip(
                         r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp4"
                         % (
                             unescape(ytP.title),
-                            unescape(yt.title).replace(" ", "_").replace(".", ""),
+                            unescape(yt.title)
+                            .replace(" ", "_")
+                            .replace(".", "")
+                            .replace("'", "")
+                            .replace('"', "")
+                            .replace("/", "")
+                            .replace(":", "")
+                            .replace("|", "").replace(",",""),
                         )
-                    )
-                    video.audio.write_audiofile(
+                    ) as video:
+                        video.audio.write_audiofile(
+                            r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp3"
+                            % (unescape(ytP.title), unescape(yt.title))
+                        )
+                    os.remove(
                         r"/home/elie/Desktop/YoutubeVideos/%s/%s.mp4"
-                        % (unescape(ytP.title), unescape(yt.title))
+                        % (
+                            unescape(ytP.title),
+                            unescape(yt.title)
+                            .replace(" ", "_")
+                            .replace(".", "")
+                            .replace("'", "")
+                            .replace('"', "")
+                            .replace("/", "")
+                            .replace(":", "")
+                            .replace("|", "").replace(",",""),
+                        )
                     )
         else:
             from youtube_search import YoutubeSearch

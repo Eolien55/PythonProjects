@@ -175,7 +175,12 @@ class Board:
                 self.squares[j][i].value = self.board[j][i]
 
     def solve_gui(self, win):
-        pg.event.get()
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_v:
+                    self.visual = not self.visual
+                if event.key == pg.K_a:
+                    return ""
         board = self.board
         find = find_empty(self.board, self.length)
         if not find:
@@ -190,11 +195,13 @@ class Board:
                 self.squares[row][col].right = True
                 if self.visual:
                     self.draw(win)
-                # time.sleep(0.001)
-                if self.solve_gui(win):
+                good = self.solve_gui(win)
+                if good:
                     return True
                 self.board[row][col] = 0
                 self.squares[row][col].right = False
+                if isinstance(good, str):
+                    return ""
         return False
 
 
@@ -244,10 +251,20 @@ def main():
         url = "hard"
     else:
         url = "expert"
-    res = req.get(f"https://sudoku.com/api/level/{url}")
-    # res = json.loads(res.text)
-    # board = [int(i) for i in res["desc"][0]]
-    board = [0] * 81
+    headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:88.0) Gecko/20100101 Firefox/88.0",
+        "host": "sudoku.com",
+        "Referer": "https://sudoku.com/",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Alt-Used": "sudoku.com",
+        "Cache-Control": "max-age=0",
+        "Cookie": "device_view=full; mode=classic",
+        "TE": "Trailers",
+        "X-Requested-With": "XMLHttpRequest",
+    }
+    res = req.get(f"https://sudoku.com/api/level/{url}", headers=headers)
+    res = json.loads(res.text)
+    board = [int(i) for i in res["mission"]]
     board = Board(board)
     pg.font.init()
     win = pg.display.set_mode(
@@ -320,9 +337,11 @@ def main():
                         url = "hard"
                     else:
                         url = "expert"
-                    res = req.get(f"https://sudoku.com/api/getLevel/{url}")
+                    res = req.get(
+                        f"https://sudoku.com/api/level/{url}", headers=headers
+                    )
                     res = json.loads(res.text)
-                    board = [int(i) for i in res["desc"][0]]
+                    board = [int(i) for i in res["mission"]]
                     board = Board(board)
                 if event.key == pg.K_RIGHT:
                     key = None
