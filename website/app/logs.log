@@ -1,44 +1,4 @@
-[2021-05-29 13:13:10 +0200] [3020] [INFO] Starting gunicorn 20.1.0
-[2021-05-29 13:13:10 +0200] [3020] [INFO] Listening at: http://127.0.0.1:5000 (3020)
-[2021-05-29 13:13:10 +0200] [3020] [INFO] Using worker: sync
-[2021-05-29 13:13:10 +0200] [3102] [INFO] Booting worker with pid: 3102
-[2021-05-29 17:39:47 +0200] [3020] [CRITICAL] WORKER TIMEOUT (pid:3102)
-[2021-05-29 17:39:58 +0200] [3020] [WARNING] Worker with pid 3102 was terminated due to signal 9
-[2021-05-29 17:40:15 +0200] [11557] [INFO] Booting worker with pid: 11557
-[2021-05-29 17:40:39 +0200] [3020] [CRITICAL] WORKER TIMEOUT (pid:11557)
-[2021-05-29 17:40:40 +0200] [3020] [WARNING] Worker with pid 11557 was terminated due to signal 9
-[2021-05-29 17:40:40 +0200] [11662] [INFO] Booting worker with pid: 11662
-[2021-05-29 17:41:10 +0200] [3020] [CRITICAL] WORKER TIMEOUT (pid:11662)
-[2021-05-29 17:41:10 +0200] [11662] [INFO] Worker exiting (pid: 11662)
-[2021-05-29 17:41:12 +0200] [3020] [WARNING] Worker with pid 11662 was terminated due to signal 9
-[2021-05-29 17:41:12 +0200] [11736] [INFO] Booting worker with pid: 11736
-[2021-05-29 17:41:42 +0200] [3020] [CRITICAL] WORKER TIMEOUT (pid:11736)
-[2021-05-29 17:41:42 +0200] [11736] [INFO] Worker exiting (pid: 11736)
-[2021-05-29 17:41:43 +0200] [3020] [WARNING] Worker with pid 11736 was terminated due to signal 9
-[2021-05-29 17:41:43 +0200] [12006] [INFO] Booting worker with pid: 12006
-[2021-05-29 18:25:43 +0200] [3020] [CRITICAL] WORKER TIMEOUT (pid:12006)
-[2021-05-29 18:25:46 +0200] [12006] [INFO] Worker exiting (pid: 12006)
-[2021-05-29 18:26:14 +0200] [3020] [WARNING] Worker with pid 12006 was terminated due to signal 9
-[2021-05-29 18:26:16 +0200] [17544] [INFO] Booting worker with pid: 17544
-[2021-05-29 18:26:46 +0200] [3020] [CRITICAL] WORKER TIMEOUT (pid:17544)
-[2021-05-29 18:26:47 +0200] [17544] [INFO] Worker exiting (pid: 17544)
-[2021-05-29 18:26:48 +0200] [3020] [WARNING] Worker with pid 17544 was terminated due to signal 9
-[2021-05-29 18:26:49 +0200] [17558] [INFO] Booting worker with pid: 17558
-[2021-05-29 18:27:19 +0200] [3020] [CRITICAL] WORKER TIMEOUT (pid:17558)
-[2021-05-29 18:27:24 +0200] [3020] [WARNING] Worker with pid 17558 was terminated due to signal 9
-[2021-05-29 18:27:26 +0200] [17568] [INFO] Booting worker with pid: 17568
-[2021-05-29 18:27:56 +0200] [3020] [CRITICAL] WORKER TIMEOUT (pid:17568)
-[2021-05-29 18:28:00 +0200] [3020] [WARNING] Worker with pid 17568 was terminated due to signal 9
-[2021-05-29 18:28:02 +0200] [17579] [INFO] Booting worker with pid: 17579
-[2021-05-29 18:28:32 +0200] [3020] [CRITICAL] WORKER TIMEOUT (pid:17579)
-[2021-05-29 18:28:35 +0200] [17579] [INFO] Worker exiting (pid: 17579)
-[2021-05-29 18:28:35 +0200] [3020] [WARNING] Worker with pid 17579 was terminated due to signal 9
-[2021-05-29 18:28:38 +0200] [17606] [INFO] Booting worker with pid: 17606
-[2021-05-29 18:29:07 +0200] [3020] [CRITICAL] WORKER TIMEOUT (pid:17606)
-[2021-05-29 18:29:08 +0200] [17606] [INFO] Worker exiting (pid: 17606)
-[2021-05-29 18:29:09 +0200] [3020] [WARNING] Worker with pid 17606 was terminated due to signal 9
-[2021-05-29 18:29:09 +0200] [17619] [INFO] Booting worker with pid: 17619
-[2021-05-29 18:29:39 +0200] [3020] [CRITICAL] WORKER TIMEOUT (pid:17619)
-[2021-05-29 18:29:39 +0200] [17619] [INFO] Worker exiting (pid: 17619)
-[2021-05-29 18:29:40 +0200] [3020] [WARNING] Worker with pid 17619 was terminated due to signal 9
-[2021-05-29 18:29:40 +0200] [17653] [INFO] Booting worker with pid: 17653
+[2021-05-29 23:18:23 +0200] [13997] [INFO] Starting gunicorn 20.1.0
+[2021-05-29 23:18:23 +0200] [13997] [INFO] Listening at: http://127.0.0.1:5000 (13997)
+[2021-05-29 23:18:23 +0200] [13997] [INFO] Using worker: sync
+[2021-05-29 23:18:23 +0200] [14087] [INFO] Booting worker with pid: 14087
