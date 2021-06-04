@@ -1,8 +1,4 @@
-[2021-05-29 23:18:23 +0200] [13997] [INFO] Starting gunicorn 20.1.0
-[2021-05-29 23:18:23 +0200] [13997] [INFO] Listening at: http://127.0.0.1:5000 (13997)
-[2021-05-29 23:18:23 +0200] [13997] [INFO] Using worker: sync
-[2021-05-29 23:18:23 +0200] [14087] [INFO] Booting worker with pid: 14087
-[2021-05-30 17:09:23 +0200] [13997] [CRITICAL] WORKER TIMEOUT (pid:14087)
-[2021-05-30 17:09:40 +0200] [14087] [INFO] Worker exiting (pid: 14087)
-[2021-05-30 17:09:57 +0200] [13997] [WARNING] Worker with pid 14087 was terminated due to signal 9
-[2021-05-30 17:09:58 +0200] [44534] [INFO] Booting worker with pid: 44534
+[2021-06-04 22:26:22 +0200] [2211] [INFO] Starting gunicorn 20.1.0
+[2021-06-04 22:26:22 +0200] [2211] [INFO] Listening at: http://127.0.0.1:5000 (2211)
+[2021-06-04 22:26:22 +0200] [2211] [INFO] Using worker: sync
+[2021-06-04 22:26:22 +0200] [2334] [INFO] Booting worker with pid: 2334

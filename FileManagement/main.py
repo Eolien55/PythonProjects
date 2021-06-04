@@ -83,8 +83,8 @@ class ManageFileType:
                 % (
                     time.ctime(os.path.getctime(path))[20:24],
                     self.matiere[m],
-                    self.mois[time.ctime(os.path.getctime(path))[4:7]],
                     fold,
+                    self.mois[time.ctime(os.path.getctime(path))[4:7]],
                 )
             ):
                 os.makedirs(
@@ -92,8 +92,8 @@ class ManageFileType:
                     % (
                         time.ctime(os.path.getctime(path))[20:24],
                         self.matiere[m],
-                        self.mois[time.ctime(os.path.getctime(path))[4:7]],
                         fold,
+                        self.mois[time.ctime(os.path.getctime(path))[4:7]],
                     )
                 )
         newpath = (
@@ -101,8 +101,8 @@ class ManageFileType:
             % (
                 time.ctime(os.path.getctime(path))[20:24],
                 self.matiere[m],
-                self.mois[time.ctime(os.path.getctime(path))[4:7]],
                 fold,
+                self.mois[time.ctime(os.path.getctime(path))[4:7]],
             )
             if fold
             else r"/home/elie/Documents/Scolaire/%s/%s/%s"
