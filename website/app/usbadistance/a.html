@@ -8,7 +8,14 @@
       href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
       rel="stylesheet"
     />
-    <style>
+    <script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"
+			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			  crossorigin="anonymous"></script>
+    <style id="style-sheet">
+      :root {
+	      --heigth: 125px;
+      }
       html {
         font-family: Roboto, sans-serif;
       }
@@ -34,7 +41,7 @@
       }
       #norm {
         position: relative;
-        margin-top: 130px;
+        margin-top: var(--heigth);
       }
       .file {
         line-height: 50px;
@@ -51,15 +58,19 @@
       }
       .folder:before {
         display: inline-block;
-        -moz-transform: scale(2);
+        transform: scale(2);
         width: 25px;
         content: url(/images/toolWindowProject_dark.svg);
+	position: relative;
+	bottom:5px;
       }
       .afile:before {
         display: inline-block;
-        -moz-transform: scale(2);
         width: 25px;
         content: url(/images/text.svg);
+	transform : scale(2);
+	position:relative;
+	bottom:5px;
       }
     </style>
   </head>
@@ -99,7 +110,6 @@
       <hr />
     </div>
     <div id="norm">
-      <hr />
       {% for fold in folders %}
       <a
         href="/files/path/{{ path + "/" + fold }}"
@@ -121,5 +131,10 @@
       </a>
       {% endfor %}
     </div>
+        <script>
+            let root = document.documentElement;
+let za_height = $('#STICKY').height()+"px";
+            root.style.setProperty("--heigth", za_height);
+    </script>
   </body>
 </html>

@@ -75,8 +75,9 @@ def files(path="/"):
     parent = os.path.abspath(os.path.join(path, ".."))
     if not "/home/elie/Documents" in parent and allowed:
         parent = path
-    files = [i for i in os.listdir(path) if not os.path.isdir(path + "/" + i)]
-    folders = [i for i in os.listdir(path) if os.path.isdir(path + "/" + i)]
+    things = sorted(os.listdir(path))
+    files = [i for i in things if not os.path.isdir(path + "/" + i)]
+    folders = [i for i in things if os.path.isdir(path + "/" + i)]
     if allowed:
         path = path.replace("/home/elie/Documents", "allowed")
         parent = parent.replace("/home/elie/Documents", "allowed")
@@ -237,25 +238,11 @@ def project(pk):
 ############################################ PAGE DE BASE ############################################
 @app.route("/")
 def welcomehere():
-    background = "background%s.jpg" % random.choice(
-        range(
-            len(
-                [
-                    i
-                    for i in os.listdir(
-                        r"/home/elie/pythonprojects/website/app/templates/usb/"
-                    )
-                    if re.match(r"background[0-9]+\.jpg", i)
-                ]
-            )
-        )
-    )
     with open("/home/elie/pythonprojects/website/app/welcome.html", "r") as file:
         return flask.render_template_string(
             file.read(),
-            background=background,
+            background="#181a1b",
         )
-
 
 ############################################ PAGE DE BASE ############################################
 ############################################ ERREURS ############################################
