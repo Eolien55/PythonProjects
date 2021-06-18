@@ -1,44 +1,15 @@
-[2021-06-09 21:31:14 +0200] [3483] [INFO] Starting gunicorn 20.1.0
-[2021-06-09 21:31:14 +0200] [3483] [INFO] Listening at: http://127.0.0.1:5000 (3483)
-[2021-06-09 21:31:14 +0200] [3483] [INFO] Using worker: sync
-[2021-06-09 21:31:14 +0200] [3629] [INFO] Booting worker with pid: 3629
-[2021-06-11 07:34:07 +0200] [3483] [CRITICAL] WORKER TIMEOUT (pid:3629)
-[2021-06-11 07:34:22 +0200] [3629] [INFO] Worker exiting (pid: 3629)
-[2021-06-11 07:34:38 +0200] [3483] [WARNING] Worker with pid 3629 was terminated due to signal 9
-[2021-06-11 07:34:44 +0200] [84005] [INFO] Booting worker with pid: 84005
-[2021-06-12 21:03:55,425] ERROR in app: Exception on /files/path/allowed/Scolaire/2021/Physique-Chimie/Juin/SEANCE 13 - 3e - 22-28 Mars.pdf [POST]
-Traceback (most recent call last):
-  File "/home/elie/.pyenv/versions/3.9.5/lib/python3.9/site-packages/flask/app.py", line 1499, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/elie/.pyenv/versions/3.9.5/lib/python3.9/site-packages/flask/app.py", line 1475, in dispatch_request
-    self.raise_routing_exception(req)
-  File "/home/elie/.pyenv/versions/3.9.5/lib/python3.9/site-packages/flask/app.py", line 1457, in raise_routing_exception
-    raise request.routing_exception  # type: ignore
-  File "/home/elie/.pyenv/versions/3.9.5/lib/python3.9/site-packages/flask/ctx.py", line 349, in match_request
-    result = self.url_adapter.match(return_rule=True)  # type: ignore
-  File "/home/elie/.pyenv/versions/3.9.5/lib/python3.9/site-packages/werkzeug/routing.py", line 2027, in match
-    raise MethodNotAllowed(valid_methods=list(have_match_for))
-werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/home/elie/.pyenv/versions/3.9.5/lib/python3.9/site-packages/flask/app.py", line 2051, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/elie/.pyenv/versions/3.9.5/lib/python3.9/site-packages/flask/app.py", line 1501, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/elie/.pyenv/versions/3.9.5/lib/python3.9/site-packages/flask/app.py", line 1369, in handle_user_exception
-    return self.handle_http_exception(e)
-  File "/home/elie/.pyenv/versions/3.9.5/lib/python3.9/site-packages/flask/app.py", line 1309, in handle_http_exception
-    return self.ensure_sync(handler)(e)
-  File "/home/elie/pythonprojects/website/app/__init__.py", line 261, in error
-    message=errors[str(err)][1],
-KeyError: '405'
-[2021-06-12 22:58:15 +0200] [3483] [CRITICAL] WORKER TIMEOUT (pid:84005)
-[2021-06-12 22:58:17 +0200] [84005] [INFO] Worker exiting (pid: 84005)
-[2021-06-12 22:58:19 +0200] [3483] [WARNING] Worker with pid 84005 was terminated due to signal 9
-[2021-06-12 22:58:24 +0200] [140692] [INFO] Booting worker with pid: 140692
-[2021-06-12 22:58:52 +0200] [3483] [CRITICAL] WORKER TIMEOUT (pid:140692)
-[2021-06-12 22:58:52 +0200] [140692] [INFO] Worker exiting (pid: 140692)
-[2021-06-12 22:58:53 +0200] [3483] [WARNING] Worker with pid 140692 was terminated due to signal 9
-[2021-06-12 22:58:53 +0200] [140857] [INFO] Booting worker with pid: 140857
+[2021-06-15 19:27:06 +0200] [2946] [INFO] Starting gunicorn 20.1.0
+[2021-06-15 19:27:06 +0200] [2946] [INFO] Listening at: http://127.0.0.1:5000 (2946)
+[2021-06-15 19:27:06 +0200] [2946] [INFO] Using worker: sync
+[2021-06-15 19:27:06 +0200] [3194] [INFO] Booting worker with pid: 3194
+[2021-06-16 18:37:22 +0200] [2946] [CRITICAL] WORKER TIMEOUT (pid:3194)
+[2021-06-16 18:37:23 +0200] [3194] [INFO] Worker exiting (pid: 3194)
+[2021-06-16 18:37:53 +0200] [2946] [WARNING] Worker with pid 3194 was terminated due to signal 9
+[2021-06-16 18:37:54 +0200] [20983] [INFO] Booting worker with pid: 20983
+[2021-06-16 19:30:13 +0200] [2946] [CRITICAL] WORKER TIMEOUT (pid:20983)
+[2021-06-16 19:30:17 +0200] [20983] [INFO] Worker exiting (pid: 20983)
+[2021-06-16 19:30:18 +0200] [2946] [WARNING] Worker with pid 20983 was terminated due to signal 9
+[2021-06-16 19:30:18 +0200] [21271] [INFO] Booting worker with pid: 21271
+[2021-06-17 19:58:27 +0200] [2946] [CRITICAL] WORKER TIMEOUT (pid:21271)
+[2021-06-17 20:03:19 +0200] [2946] [WARNING] Worker with pid 21271 was terminated due to signal 9
+[2021-06-17 20:05:34 +0200] [2946] [CRITICAL] WORKER TIMEOUT (pid:485228)
