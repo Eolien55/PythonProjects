@@ -1,11 +1,4 @@
-[2021-06-19 00:45:02 +0200] [43483] [INFO] Starting gunicorn 20.1.0
-[2021-06-19 00:45:02 +0200] [43483] [ERROR] Connection in use: ('127.0.0.1', 5000)
-[2021-06-19 00:45:02 +0200] [43483] [ERROR] Retrying in 1 second.
-[2021-06-19 00:45:03 +0200] [43483] [ERROR] Connection in use: ('127.0.0.1[2021-06-19 08:20:16 +0200] [42975] [CRITICAL] WORKER TIMEOUT (pid:43099)
-[2021-06-19 08:20:16 +0200] [43099] [INFO] Worker exiting (pid: 43099)
-[2021-06-19 08:20:17 +0200] [42975] [WARNING] Worker with pid 43099 was terminated due to signal 9
-[2021-06-19 08:20:17 +0200] [44427] [INFO] Booting worker with pid: 44427
- 00:45:05 +0200] [43483] [ERROR] Retrying in 1 second.
-[2021-06-19 00:45:06 +0200] [43483] [ERROR] Connection in use: ('127.0.0.1', 5000)
-[2021-06-19 00:45:06 +0200] [43483] [ERROR] Retrying in 1 second.
-[2021-06-19 00:45:07 +0200] [43483] [ERROR] Can't connect to ('127.0.0.1', 5000)
+[2021-06-20 10:41:50 +0200] [2638] [INFO] Starting gunicorn 20.1.0
+[2021-06-20 10:41:50 +0200] [2638] [INFO] Listening at: http://127.0.0.1:5000 (2638)
+[2021-06-20 10:41:50 +0200] [2638] [INFO] Using worker: sync
+[2021-06-20 10:41:50 +0200] [2716] [INFO] Booting worker with pid: 2716

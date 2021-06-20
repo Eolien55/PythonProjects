@@ -8,6 +8,7 @@ user = os.getlogin()
 
 
 def run(link, soundonly=False, suffix=""):
+    print(link)
     if isinstance(link, tuple):
         from youtube_search import YoutubeSearch
 

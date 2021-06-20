@@ -108,7 +108,7 @@ def scrapping_def(url: str):
                     c.append("Définition " + str(len(definition) + 1) + " : ")
                     c.append(e.text.strip())
             d.append(c)
-            definition.append(d)
+            definition.append(c)
     return definition
 
 
