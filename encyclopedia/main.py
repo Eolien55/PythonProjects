@@ -105,10 +105,14 @@ def scrapping_def(url: str):
         if "tlf_parah" not in str(i)[str(i).index("tlf_parah") + 2 :]:
             if i.find_all(class_="tlf_cdefinition"):
                 for e in i.find_all(class_="tlf_cdefinition"):
-                    c.append("Définition " + str(len(definition) + 1) + " : ")
+                    c.append(
+                        "Partie de la définition " + str((len(c) // 2) + 1) + " : "
+                    )
                     c.append(e.text.strip())
+            d.append("Définition " + str(len(d) + 1) + " : ")
             d.append(c)
-            definition.append(c)
+            definition.append("Sens global " + str((len(definition) // 2) + 1) + " : ")
+            definition.append(d)
     return definition
 
 
