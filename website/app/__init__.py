@@ -37,6 +37,7 @@ def sessionlive():
 
 def login():
     global iplist
+    print(iplist)
     ip = flask.request.environ.get("HTTP_X_FORWARDED_FOR")
     if not ip:
         ip = flask.request.environ.get("REMOTE_ADDR")
