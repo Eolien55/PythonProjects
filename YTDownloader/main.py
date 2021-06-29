@@ -1,36 +1,41 @@
 from pytube import YouTube, Playlist
-import tkinter
-from tkinter import ttk as tk
-from tkinter import messagebox
-import ttkthemes as themes
 import os
 from html import unescape
 import re
 from werkzeug.utils import secure_filename as file
 from moviepy.editor import VideoFileClip
+import gi
+
+gi.require_version("Gtk", "3.0")
 
 user = os.getlogin()
 
+from gi.repository import Gtk
+
+
+def show(title, text):
+    dialog = Gtk.MessageDialog(
+        transient_for=window,
+        flags=0,
+        message_type=Gtk.MessageType.INFO,
+        buttons=Gtk.ButtonsType.OK,
+        text=title,
+    )
+    dialog.format_secondary_text(text)
+    dialog.run()
+
+    dialog.destroy()
+
+
+def help_me(event):
+    show(
+        "Help",
+        "search:[query]   will replace search:[query] by the url of a video that matches with the query\n\nsoundonly:    download a mp3 instead of a mp4\n\nGlobally, it downloads videos that have the good URL",
+    )
+
 
 def run(event=None):
-    link = entry.get()
-    if "help" in link:
-        if link.index("help") == 0:
-            messagebox.showinfo(
-                "YoutubeDownloader",
-                "search:[query]   will replace search:[query] by the url of a video that matches with the query\n\nsoundonly:    download a mp3 instead of a mp4\n\nGlobally, it downloads videos that have the good URL",
-            )
-            st.set("")
-            entry.update()
-            return
-    if event == "help":
-        messagebox.showinfo(
-            "YoutubeDownloader",
-            "search:[query]   will replace search:[query] by the url of a video that matches with the query\n\nsoundonly:    download a mp3 instead of a mp4\n\nGlobally, it downloads videos that have the good URL",
-        )
-        st.set("")
-        entry.update()
-        return
+    link = entry.get_text()
     soundonly = "soundonly:" in link
     if "search:" in link:
         link = (re.sub(r"(^|:).+\:", "", link),)
@@ -39,10 +44,9 @@ def run(event=None):
     try:
         rundownload(link, soundonly)
     except Exception as e:
-        messagebox.showinfo("YoutubeDownloader", e)
+        show("Error", e)
     finally:
-        st.set("")
-        entry.update()
+        entry.set_text("")
 
 
 def rundownload(link, soundonly=False, suffix="", safe=False):
@@ -85,9 +89,9 @@ def rundownload(link, soundonly=False, suffix="", safe=False):
         name = file(name).replace(".", "")
 
     download_video = video.streams.get_highest_resolution()
-    messagebox.showinfo(
-        "",
+    show(
         f"Let's download '{video.title}' with a resolution of '{download_video.resolution}'{' as an mp3' if safe else ''}",
+        "",
     )
     download_video.download(
         os.path.join(f"/home/{user}/Desktop/YoutubeVideos", suffix), filename=name
@@ -96,18 +100,28 @@ def rundownload(link, soundonly=False, suffix="", safe=False):
     return name, name_audio
 
 
-root = themes.ThemedTk(theme="arc")
-icon = tkinter.PhotoImage(os.path.join(os.path.abspath("."), "YouTube-Emblem.png"))
-root.wm_iconphoto(False, icon)
-root.configure(background="#F6F4F2")
-root.title("YoutubeDownloader")
-root.resizable(False, False)
-st = tkinter.StringVar()
-label = tk.Label(root, text="Enter the URL")
-label.grid(column=0, row=0)
-entry = tk.Entry(root, width=50, text=st)
-entry.bind("<Return>", run)
-entry.grid(column=0, row=1)
-bt = tk.Button(root, command=lambda: run("help"), text="Help")
-bt.grid(column=0, row=2)
-root.mainloop()
+window = Gtk.Window()
+window.set_title("Youtube Downloader")
+window.set_default_size(300, 0)
+window.set_resizable(False)
+
+box = Gtk.Box(spacing=5, orientation=Gtk.Orientation.VERTICAL)
+label = Gtk.Label(label="Entrez l'url puis la touche entrer")
+button = Gtk.Button(label="help")
+button.set_halign(Gtk.Align.CENTER)
+entry = Gtk.Entry()
+entry.set_halign(Gtk.Align.CENTER)
+
+box.pack_start(label, False, False, 0)
+box.pack_start(entry, False, False, 0)
+box.pack_start(button, False, False, 0)
+
+window.add(box)
+
+entry.connect("activate", run)
+button.connect("clicked", help_me)
+window.connect("delete-event", Gtk.main_quit)
+
+window.show_all()
+
+Gtk.main()
