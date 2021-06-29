@@ -1,12 +1,8 @@
 import hashlib
 import datetime
-from numpy import random
 from urllib.parse import unquote
 from werkzeug.exceptions import HTTPException
-from werkzeug.utils import secure_filename
 import os
-import subprocess
-import re
 import time
 
 __version__ = "1.0.0"
@@ -48,7 +44,9 @@ def login():
         return False
     if ip not in iplist:
         return False
-    return iplist[ip][1]
+    if id_password := flask.session.get("password"):
+        return hashlib.sha512(bytes(id_password, "UTF-8")).hexdigest() in password
+    return False
 
 
 ############################################ USB A DISTANCE ############################################
@@ -135,8 +133,8 @@ def log_in():
         if not ip:
             flask.abort(501)
     if not ip in iplist:
-        iplist.update({ip: [0, 0]})
-    if iplist[ip][0] >= 4:
+        iplist.update({ip: 0})
+    if iplist[ip] >= 4:
         file = open(
             "/home/elie/pythonprojects/website/app/usbadistance/too_much_tries.html",
             "r",
@@ -155,24 +153,17 @@ def log_in():
         hashlib.sha512(bytes(flask.request.form["username"], "UTF-8")).hexdigest()
         in password
     ):
-        iplist[ip][1] = 1
+        flask.session["password"] = flask.request.form["username"]
         return flask.redirect("/files")
     else:
-        iplist[ip][0] += 1
+        iplist[ip] += 1
         return """<body style="color:white;font-family:sans-serif;background: url('/images/backgroundn0.jpg');background-size:  cover;">invalid password</body>"""
 
 
 @app.route("/files/logout")
 def logout():
     global iplist
-    try:
-        ip = flask.request.environ["HTTP_X_FORWARDED_FOR"]
-    except:
-        ip = flask.request.environ.get("REMOTE_ADDR")
-    try:
-        iplist[ip][1] = 0
-    except Exception as e:
-        pass
+    flask.session["password"] = ""
     return flask.redirect("/files/")
 
 
@@ -192,7 +183,7 @@ def imgfile(string):
 def about():
     projects = eval(
         open(
-            "/home/elie/pythonprojects/website/app/templates/about/database", "r"
+            "/home/elie/pythonprojects/website/app/templates/about/database.json", "r"
         ).read()
     )
     return flask.render_template_string(
@@ -208,13 +199,14 @@ def about():
 def project(pk):
     thisproject = eval(
         open(
-            "/home/elie/pythonprojects/website/app/templates/about/database", "r"
+            "/home/elie/pythonprojects/website/app/templates/about/database.json", "r"
         ).read()
     )[1][pk - 1]
     if isinstance(thisproject["longdescription"], list):
         projects = eval(
             open(
-                "/home/elie/pythonprojects/website/app/templates/about/database", "r"
+                "/home/elie/pythonprojects/website/app/templates/about/database.json",
+                "r",
             ).read()
         )
         return flask.render_template_string(
@@ -244,6 +236,7 @@ def welcomehere():
             file.read(),
             background="#181a1b",
         )
+
 
 ############################################ PAGE DE BASE ############################################
 ############################################ ERREURS ############################################

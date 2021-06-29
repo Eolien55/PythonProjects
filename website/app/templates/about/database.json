@@ -26,5 +26,5 @@
     },{
         "show":0,"title":"Meh/20","image":"P13.png","description":"Un truc pour jouer au sudoku, et finir, si on y arrive pas","pk":13,"longdescription":"Ouais, bah g fait un sudoku, c'est simple d'y jouer, il peut se r\u00e9soudre tout seul, etc.","learned":"Algorithmes, back-tracing, PyGame"
     }
-        ]
+    ]
 )

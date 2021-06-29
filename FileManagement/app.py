@@ -1,18 +1,20 @@
-from tkinter import ttk
-import tkinter as tk
-import ttkthemes as themes
 import subprocess
+import gi
+
+gi.require_version("Gtk", "3.0")
+
+from gi.repository import Gtk
 
 running = False
 
 
-def switch():
+def switch(event=None):
     global running
     if running:
         with open("/tmp/running_files_number", "w") as file:
             file.write("0")
         running = False
-        running_string.set("Pas en train de classer")
+        label.set_label("Pas en train de classer")
     else:
         with open("/tmp/running_files_number", "w") as file:
             file.write("1")
@@ -22,17 +24,25 @@ def switch():
             stderr=subprocess.PIPE,
         )
         running = True
-        running_string.set("En train de classer")
+        label.set_label("En train de classer")
 
 
-main = themes.ThemedTk(theme="arc")
-main.configure(background="#F6F4F2")
+window = Gtk.Window()
+window.set_title("File manager")
+window.set_default_size(200, 150)
+window.set_resizable(False)
 
-running_string = tk.StringVar()
-running_string.set("Pas en train de classer")
-button_switch = ttk.Button(main, command=switch, text="switch")
-label_running = ttk.Label(main, textvariable=running_string)
-button_switch.pack()
-label_running.pack()
+box = Gtk.Box(spacing=5, orientation=Gtk.Orientation.VERTICAL)
+button = Gtk.Button(label="switch")
+button.set_halign(Gtk.Align.CENTER)
+label = Gtk.Label(label="Pas en train de classer")
+box.pack_start(button, False, False, 0)
+box.pack_start(label, True, True, 0)
 
-main.mainloop()
+window.add(box)
+
+button.connect("clicked", switch)
+window.connect("delete-event", Gtk.main_quit)
+
+window.show_all()
+Gtk.main()
