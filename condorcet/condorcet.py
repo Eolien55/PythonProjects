@@ -2,7 +2,6 @@ from tkinter import ttk
 import tkinter as tk
 import ttkthemes as themes
 from tkinter import messagebox as mb
-import numpy as np
 import pref_table
 import schulze
 
