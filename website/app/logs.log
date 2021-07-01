@@ -2,3 +2,11 @@
 [2021-06-29 22:04:30 +0200] [14821] [INFO] Listening at: http://127.0.0.1:5000 (14821)
 [2021-06-29 22:04:30 +0200] [14821] [INFO] Using worker: sync
 [2021-06-29 22:04:30 +0200] [14962] [INFO] Booting worker with pid: 14962
+[2021-06-30 10:58:20 +0200] [14821] [CRITICAL] WORKER TIMEOUT (pid:14962)
+[2021-06-30 10:58:23 +0200] [14962] [INFO] Worker exiting (pid: 14962)
+{'timestamp': 1624997071.499472}
+[2021-06-30 10:58:27 +0200] [22924] [INFO] Booting worker with pid: 22924
+[2021-07-01 09:38:02 +0200] [14821] [CRITICAL] WORKER TIMEOUT (pid:22924)
+[2021-07-01 09:38:14 +0200] [22924] [INFO] Worker exiting (pid: 22924)
+[2021-07-01 09:38:36 +0200] [14821] [WARNING] Worker with pid 22924 was terminated due to signal 9
+[2021-07-01 09:38:38 +0200] [48218] [INFO] Booting worker with pid: 48218

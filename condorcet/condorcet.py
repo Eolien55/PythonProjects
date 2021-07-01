@@ -1,184 +1,124 @@
-from tkinter import ttk
-import tkinter as tk
-import ttkthemes as themes
-from tkinter import messagebox as mb
 import pref_table
 import schulze
+import os
+import gi
 
-colors = [
-    "#80BFFF",
-    "#FFFF70",
-    "#FF6060",
-    "#80FF70",
-    "#61a854",
-    "#1c9147",
-    "#40ffff",
-    "#ffa1c0",
-    "#f59873",
-    "#a159ff",
-    "#ff59f7",
-]
+gi.require_version("Gtk", "3.0")
+
+from gi.repository import Gtk
+
 alternatives = []
 ballots = []
 weigths = []
 
-################################ BASE ################################
 
-main = themes.ThemedTk(theme="arc")
-main.configure(background="#F6F4F2")
-main.title("PRESENTATION")
-main.geometry("")
-
-################################ PRESENTATION ################################
+def get_resource_path(rel_path):
+    dir_of_py_file = os.path.dirname(__file__)
+    rel_path_to_resource = os.path.join(dir_of_py_file, rel_path)
+    abs_path_to_resource = os.path.abspath(rel_path_to_resource)
+    return abs_path_to_resource
 
 
-def next():
-    main.title("ALTERNATIVES")
-    labelExpl.destroy()
-    buttonExpl.destroy()
-    labelEnter.grid(padx=15, pady=10, column=1)
-    entryEnter.grid(padx=15, pady=10, column=1)
-    labelAlts.grid(padx=15, pady=10, column=1)
-    buttonPageNext.grid(padx=15, pady=10, row=4, column=0)
-    buttonPagePrev.grid(padx=15, pady=10, row=4, column=2)
-    buttonEnter.grid(padx=15, pady=10, column=1)
-    page(realstring, number, buttonPageNext, buttonPagePrev)
+def show(title, text):
+    dialog = Gtk.MessageDialog(
+        transient_for=window,
+        flags=0,
+        message_type=Gtk.MessageType.INFO,
+        buttons=Gtk.ButtonsType.OK,
+        text=title,
+    )
+    dialog.format_secondary_text(text)
+    dialog.run()
+
+    dialog.destroy()
 
 
-buttonExpl = ttk.Button(main, text="Ok", command=next)
-labelExpl = ttk.Label(
-    main,
-    text="""Vous devez choisir des alternatives et les entrer. 
-Ensuite, vous devez mettre des TYPES de scrutin 
-en cochant les cases correspondant aux préférences 
-de chacun. Enfin, il vous faut entrer le nombre de 
-chaque type de scrutin.""",
-)
-labelExpl.grid(padx=15, pady=15, column=0, row=0)
-buttonExpl.grid(padx=15, pady=15, column=1, row=1)
-
-################################ ALTERNATIVES ################################
-
-
-def vote():
-    if not mb.askyesno("", "Vous êtes sûr d'avoir mis TOUTES les alternatives ?"):
-        return
-    main.title("VOTE")
-    labelEnter.destroy()
-    entryEnter.destroy()
-    buttonEnter.destroy()
-    labelVote.grid(padx=15, pady=10, column=1)
-    entryVote.grid(padx=15, pady=10, column=1)
-    labelBallots.grid(padx=15, pady=10, column=1)
-    ballotPageNext.grid(padx=15, pady=10, row=8, column=0)
-    ballotPagePrev.grid(padx=15, pady=10, row=8, column=2)
-    buttonEndBallots.grid(padx=15, pady=10, column=1)
-    page(realstring, number, buttonPageNext, buttonPagePrev)
-    page(realstring, ballot_number, ballotPageNext, ballotPagePrev)
+def _next(event):
+    window.set_title("Alternatives")
+    labelExp.destroy()
+    buttonExp.destroy()
+    grid.attach(labelAltHelp, 1, 0, 1, 1)
+    grid.attach(entryAlt, 1, 1, 1, 1)
+    grid.attach(blank, 1, 2, 1, 1)
+    grid.attach(blank_too, 1, 4, 1, 1)
+    grid.attach(buttonPrev, 0, 3, 1, 1)
+    grid.attach(buttonNext, 2, 3, 1, 1)
+    grid.attach(labelAlt, 1, 3, 1, 1)
+    grid.attach(buttonEndAlt, 1, 5, 1, 1)
+    window.resize(1, 1)
+    window.show_all()
 
 
-def add(event):
-    global realstring
-    alternative = resetEnter.get()
-    if alternative and alternative not in alternatives:
-        alternatives.append(resetEnter.get())
-        realstring = (
-            realstring + "\n" + str(len(alternatives)) + " : " + resetEnter.get()
-        )
-        resetAlts.set(page(realstring, number, buttonPageNext, buttonPagePrev))
-        labelAlts.update()
-    else:
-        mb.showinfo("", "Alternative déjà utilisée ou alternative incorrecte")
-    resetEnter.set("")
-
-
-def page(string, number, button1, button2):
+def _page(string, buttons, number):
     if not "\n".join(string.split("\n")[(number - 1) * 10 : number * 10]):
-        button1["state"] = tk.DISABLED
+        buttons[0].set_sensitive(False)
     else:
-        button1["state"] = tk.NORMAL
+        buttons[0].set_sensitive(True)
     if not "\n".join(string.split("\n")[(number + 1) * 10 : (number + 2) * 10]):
-        button2["state"] = tk.DISABLED
+        buttons[1].set_sensitive(False)
     else:
-        button2["state"] = tk.NORMAL
+        buttons[1].set_sensitive(True)
+    window.resize(1, 1)
     return "\n".join(string.split("\n")[number * 10 : (number + 1) * 10])
 
 
-def prevpage():
-    global number
-    number += 1
-    resetAlts.set(page(realstring, number, buttonPageNext, buttonPagePrev))
-
-
-def nextpage():
+def _prevpage(event, ballot=0):
+    if ballots:
+        global numberBallot
+        numberBallot -= 1
+        labelAlt.set_label(_page(pageString, (ballotPrev, ballotNext), numberBallot))
+        return
     global number
     number -= 1
-    resetAlts.set(page(realstring, number, buttonPageNext, buttonPagePrev))
+    labelAlt.set_label(_page(pageString, (buttonPrev, buttonNext), number))
 
 
-labelEnter = ttk.Label(main, text="Entrez l'alternative (= le candidat) suivant(e)")
-resetEnter = tk.StringVar()
-resetEnter.set("")
-entryEnter = ttk.Entry(main, text=resetEnter)
-entryEnter.bind("<Return>", add)
-buttonEnter = ttk.Button(
-    main, text="Toutes les alternatives ont été entrées", command=vote
-)
-resetAlts = tk.StringVar()
-resetAlts.set("Ajoutées jusque là :")
-labelAlts = ttk.Label(main, textvariable=resetAlts, foreground="#A0A0A0")
-realstring = resetAlts.get()
-buttonPageNext = ttk.Button(main, text="<", command=nextpage)
-buttonPagePrev = ttk.Button(main, text=">", command=prevpage)
-number = 0
-
-################################ VOTE ################################
-
-
-def prevballot():
-    global ballot_number
-    ballot_number += 1
-    ballot_string.set(
-        page(real_ballot_string, ballot_number, ballotPageNext, ballotPagePrev)
-    )
-
-
-def nextballot():
-    global ballot_number
-    ballot_number -= 1
-    ballot_string.set(
-        page(real_ballot_string, ballot_number, ballotPageNext, ballotPagePrev)
-    )
-
-
-def add_ballot(event):
-    global real_ballot_string
-    try:
-        string_ballot = resetVote.get().split(",")[0]
-        number = resetVote.get().split(",")[1]
-        number = int(number)
-    except:
-        mb.showerror("", "Mauvaise syntaxe. Réessayez.")
+def _nextpage(event, ballot=0):
+    if ballots:
+        global numberBallot
+        numberBallot += 1
+        labelAlt.set_label(_page(pageString, (ballotPrev, ballotNext), numberBallot))
         return
-    ballot, string_ballot = string_to_ballot(string_ballot)
-    if ballot:
-        if ballot in ballots:
-            mb.showerror("", "Scrutin déjà entré")
-            return
-        else:
-            real_ballot_string += "\n" + string_ballot
-            ballot_string.set(
-                page(real_ballot_string, ballot_number, ballotPageNext, ballotPagePrev)
-            )
-            ballots.append(ballot)
-            weigths.append(number)
-            resetVote.set("")
-    else:
-        mb.showerror("", "Mauvaise syntaxe. Réessayez.")
+    global number
+    number += 1
+    labelAlt.set_label(_page(pageString, (buttonPrev, buttonNext), number))
+
+
+def _add_alt(event):
+    global pageString
+    candidate = entryAlt.get_text()
+    if candidate in alternatives:
+        show(f"You already added {candidate} !", "")
+        return
+    entryAlt.set_text("")
+    alternatives.append(candidate)
+    pageString += f"\n{len(alternatives)} : {candidate}"
+    labelAlt.set_label(_page(pageString, (buttonPrev, buttonNext), number))
+
+
+def _end_alt(event):
+    global number, pageString
+    window.set_title("Vote")
+    labelAltHelp.destroy()
+    entryAlt.destroy()
+    buttonEndAlt.destroy()
+    blank.destroy()
+    number, pageString = 0, ""
+    grid.attach(labelBallotsHelp, 1, 5, 1, 1)
+    grid.attach(entryBallots, 1, 6, 1, 1)
+    grid.attach(blank_again_again, 1, 7, 1, 1)
+    grid.attach(ballotPrev, 0, 8, 1, 1)
+    grid.attach(ballotLabel, 1, 8, 1, 1)
+    grid.attach(ballotNext, 2, 8, 1, 1)
+    grid.attach(blank_again, 2, 9, 1, 1)
+    grid.attach(END_EVERYTHING, 1, 10, 1, 1)
+    window.resize(1, 1)
+    window.show_all()
 
 
 def string_to_ballot(string):
-    ballot = string.split("+")
+    ballot, number = string.split(",")[0], int(string.split(",")[1])
+    ballot = ballot.split("+")
     ballot = [i.split("-") for i in ballot]
     for i in range(len(ballot)):
         ballot[i] = list(set(ballot[i]))
@@ -197,57 +137,131 @@ def string_to_ballot(string):
             if j in pref_table.concat_lists(ballot[min(i + 1, len(ballot)) :], level=1):
                 return None, None
     string_ballot = "+".join(["-".join(map(str, i)) for i in ballot])
-    return ballot, string_ballot
+    return ballot, string_ballot, number
 
 
-def end_vote():
+def _add_ballot(event):
+    string_ballot = entryBallots.get_text()
+    try:
+        ballot, string_ballot, howmany = string_to_ballot(string_ballot)
+        assert ballot and string_ballot and howmany, "Gaspard's definitely's a cutie"
+    except:
+        show("Erreur de syntaxe", "")
+        return
+    if ballot in ballots:
+        show("Ce scrutin a déjà été entré", "")
+        return
+    ballots.append(ballot)
+    weigths.append(howmany)
+    global pageBallot
+    pageBallot += f"\n{string_ballot}"
+    ballotLabel.set_label(_page(pageBallot, (ballotPrev, ballotNext), numberBallot))
+    entryBallots.set_text("")
+
+
+def _end_like_like_you_know_like_everything(event):
     global length
     length = len(alternatives)
-    entryVote.destroy()
-    labelVote.destroy()
-    labelBallots.destroy()
-    ballotPageNext.destroy()
-    ballotPagePrev.destroy()
-    buttonEndBallots.destroy()
-    buttonPageNext.destroy()
-    buttonPagePrev.destroy()
-    labelAlts.destroy()
+    window.set_title("Résultats")
+    labelBallotsHelp.destroy()
+    labelAlt.destroy()
+    buttonNext.destroy()
+    buttonPrev.destroy()
+    ballotNext.destroy()
+    ballotPrev.destroy()
+    entryBallots.destroy()
+    END_EVERYTHING.destroy()
+    ballotLabel.destroy()
+    blank.destroy()
+    blank_too.destroy()
+    blank_again_again.destroy()
+    blank_again.destroy()
     winner = schulze.main(pref_table.main(length, ballots, weigths))
 
     winner = "Liste des vainqueurs : \n" + "\n".join(
         map(alternatives.__getitem__, winner),
     )
+    winnar = Gtk.Label(label=winner)
+    grid.attach(winnar, 0, 0, 1, 1)
+    window.resize(1, 1)
+    window.show_all()
 
-    labelWINNAR = ttk.Label(main, text=winner)
-    labelWINNAR.grid(padx=15, pady=15)
 
+window = Gtk.Window()
+window.set_title("Explications")
+window.set_wmclass("Scrutin de Condorcet", "Scrutin de Condorcet")
+window.set_icon_from_file(get_resource_path("voting.png"))
 
-resetVote = tk.StringVar()
-resetVote.set("")
-entryVote = ttk.Entry(main, text=resetVote)
-entryVote.bind("<Return>", add_ballot)
-labelVote = ttk.Label(
-    main,
-    text="""Rappel pour la syntaxe : 
-    [alternative]-[alternative]-...+
-    [alternative]+...+[alternative],nombre. 
-    - pour l'égalité entre 2 
-    alternatives, + pour la 
-    préférence des alternatives à 
-    droite sur les alternatives à 
-    gauche. Nombre pour le nombre 
-    de scrutins de ce type""",
+grid = Gtk.Grid()
+box = Gtk.Box(spacing=20)
+
+labelExp = Gtk.Label(
+    label="""Vous devez choisir des alternatives et les entrer. 
+Ensuite, vous devez mettre des TYPES de scrutin 
+en cochant les cases correspondant aux préférences 
+de chacun. Enfin, il vous faut entrer le nombre de 
+chaque type de scrutin."""
 )
+buttonExp = Gtk.Button(label="Suivant")
 
-real_ballot_string = "Jusque-là :"
-ballot_string = tk.StringVar()
-ballot_string.set(real_ballot_string)
-labelBallots = ttk.Label(main, textvariable=ballot_string, foreground="#A0A0A0")
-ballotPageNext = ttk.Button(main, text="<", command=nextballot)
-ballotPagePrev = ttk.Button(main, text=">", command=prevballot)
-ballot_number = 0
-buttonEndBallots = ttk.Button(
-    main, text="Tous les scrutins ont été entrés", command=end_vote
+labelAltHelp = Gtk.Label(label="Entrez l'alternative suivante")
+entryAlt = Gtk.Entry()
+pageString = "Ajoutées jusque là :"
+number = 0
+labelAlt = Gtk.Label(label=pageString)
+buttonPrev = Gtk.Button(label="<")
+buttonNext = Gtk.Button(label=">")
+buttonEndAlt = Gtk.Button(label="Voter")
+blank = Gtk.Label(label="\n")
+blank_too = Gtk.Label(label="\n")
+_page(pageString, (buttonPrev, buttonNext), number)
+
+buttonPrev.set_valign(Gtk.Align.CENTER)
+buttonNext.set_valign(Gtk.Align.CENTER)
+
+numberBallot = 0
+pageBallot = "Jusqu'ici : "
+blank_again = Gtk.Label(label="\n")
+blank_again_again = Gtk.Label(label="\n")
+labelBallotsHelp = Gtk.Label(
+    label="""Rappel pour la syntaxe : 
+[alternative]-[alternative]-...+
+[alternative]+...+[alternative],nombre. 
+- pour l'égalité entre 2 
+alternatives, + pour la 
+préférence des alternatives à 
+droite sur les alternatives à 
+gauche. Nombre pour le nombre 
+de scrutins de ce type"""
 )
+entryBallots = Gtk.Entry()
+ballotPrev = Gtk.Button(label="<")
+ballotNext = Gtk.Button(label=">")
+ballotLabel = Gtk.Label(label=pageBallot)
 
-main.mainloop()
+END_EVERYTHING = Gtk.Button(label="Terminé (sûr ?)")
+
+ballotPrev.set_valign(Gtk.Align.CENTER)
+ballotNext.set_valign(Gtk.Align.CENTER)
+
+grid.attach(labelExp, 0, 0, 1, 1)
+grid.attach(buttonExp, 1, 1, 1, 1)
+
+buttonExp.connect("clicked", _next)
+buttonPrev.connect("clicked", _prevpage)
+buttonNext.connect("clicked", _nextpage)
+ballotPrev.connect("clicked", _prevpage, 1)
+ballotNext.connect("clicked", _nextpage, 1)
+buttonEndAlt.connect("clicked", _end_alt)
+END_EVERYTHING.connect("clicked", _end_like_like_you_know_like_everything)
+entryAlt.connect("activate", _add_alt)
+entryBallots.connect("activate", _add_ballot)
+window.connect("delete-event", Gtk.main_quit)
+
+grid.set_margin_top(20)
+grid.set_margin_bottom(20)
+box.pack_start(grid, True, True, 20)
+window.add(box)
+window.show_all()
+
+Gtk.main()
