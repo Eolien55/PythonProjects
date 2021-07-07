@@ -107,6 +107,8 @@ def rundownload(link, suffix="", format="mp4"):
 
 window = Gtk.Window()
 window.set_title("Youtube Downloader")
+window.set_title("Explications")
+window.set_wmclass("Youtube Downloader", "Youtube Downloader")
 window.set_default_size(300, 0)
 window.set_resizable(False)
 
