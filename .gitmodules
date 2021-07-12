@@ -1,0 +1,3 @@
+[submodule "SchulzeMethod"]
+	path = SchulzeMethod
+	url = git@github.com:Eolien55/SchulzeMethod
