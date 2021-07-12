@@ -1,3 +1,6 @@
 [submodule "SchulzeMethod"]
 	path = SchulzeMethod
 	url = git@github.com:Eolien55/SchulzeMethod
+[submodule "YoutubeDownloader"]
+	path = YoutubeDownloader
+	url = git@github.com:Eolien55/YoutubeDownloader
