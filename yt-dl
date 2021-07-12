@@ -1,1 +1,1 @@
-python /home/elie/pythonprojects/YTDownloader/youtube-download.py $@
+python /home/elie/pythonprojects/YoutubeDownloader/youtube-download.py $@
