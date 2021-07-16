@@ -1,0 +1,1 @@
+sudo ip address add 2a01:e0a:12:91c0:8021:18fb:87c9:c774/64 dev wlo1
