@@ -1,4 +1,4 @@
-[2021-07-06 14:30:21 +0200] [2878] [INFO] Starting gunicorn 20.1.0
-[2021-07-06 14:30:21 +0200] [2878] [INFO] Listening at: http://127.0.0.1:5000 (2878)
-[2021-07-06 14:30:21 +0200] [2878] [INFO] Using worker: sync
-[2021-07-06 14:30:21 +0200] [2960] [INFO] Booting worker with pid: 2960
+[2021-07-20 13:19:41 +0200] [2942] [INFO] Starting gunicorn 20.1.0
+[2021-07-20 13:19:41 +0200] [2942] [INFO] Listening at: http://127.0.0.1:5000 (2942)
+[2021-07-20 13:19:41 +0200] [2942] [INFO] Using worker: sync
+[2021-07-20 13:19:41 +0200] [3027] [INFO] Booting worker with pid: 3027
