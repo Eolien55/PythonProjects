@@ -1,13 +1,4 @@
-[2021-07-22 11:14:02 +0200] [20676] [INFO] Starting gunicorn 20.1.0
-[2021-07-22 11:14:02 +0200] [20676] [INFO] Listening at: http://127.0.0.1:5000 (20676)
-[2021-07-22 11:14:02 +0200] [20676] [INFO] Using worker: sync
-[2021-07-22 11:14:02 +0200] [20761] [INFO] Booting worker with pid: 20761
-[2021-07-22 11:39:16 +0200] [20676] [CRITICAL] WORKER TIMEOUT (pid:20761)
-[2021-07-22 11:39:16 +0200] [20761] [INFO] Worker exiting (pid: 20761)
-[2021-07-22 11:39:16 +0200] [21309] [INFO] Booting worker with pid: 21309
-[2021-07-22 12:04:31 +0200] [20676] [CRITICAL] WORKER TIMEOUT (pid:21309)
-[2021-07-22 12:04:31 +0200] [21309] [INFO] Worker exiting (pid: 21309)
-[2021-07-22 12:04:31 +0200] [21630] [INFO] Booting worker with pid: 21630
-[2021-07-22 13:59:24 +0200] [20676] [CRITICAL] WORKER TIMEOUT (pid:21630)
-[2021-07-22 13:59:27 +0200] [21630] [INFO] Worker exiting (pid: 21630)
-[2021-07-22 13:59:27 +0200] [23750] [INFO] Booting worker with pid: 23750
+[2021-08-03 12:05:15 +0200] [16925] [INFO] Starting gunicorn 20.1.0
+[2021-08-03 12:05:15 +0200] [16925] [INFO] Listening at: http://127.0.0.1:5000 (16925)
+[2021-08-03 12:05:15 +0200] [16925] [INFO] Using worker: sync
+[2021-08-03 12:05:15 +0200] [17010] [INFO] Booting worker with pid: 17010
