@@ -4,3 +4,6 @@
 [submodule "YoutubeDownloader"]
 	path = YoutubeDownloader
 	url = git@github.com:Eolien55/YoutubeDownloader
+[submodule "PhotosManager"]
+	path = PhotosManager
+	url = git@github.com:Eolien55/PhotosManager
