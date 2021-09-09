@@ -18,7 +18,7 @@ password = [
 ]
 
 app.secret_key = "oof"
-UPLOAD_FOLDER = "/home/elie/Documents/usb"
+UPLOAD_FOLDER = "/home/eolien55/Documents/usb"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
@@ -62,7 +62,7 @@ def files(path="/"):
             return flask.redirect("/files/login")
     else:
         allowed = True
-        path = path.replace("allowed", "/home/elie/Documents")
+        path = path.replace("allowed", "/home/eolien55/Documents")
     if not os.path.exists(path):
         path = unquote(path)
     if not os.path.exists(path):
@@ -72,15 +72,15 @@ def files(path="/"):
     if not os.path.isdir(path):
         return flask.send_file(path)
     parent = os.path.abspath(os.path.join(path, ".."))
-    if not "/home/elie/Documents" in parent and allowed:
+    if not "/home/eolien55/Documents" in parent and allowed:
         parent = path
     things = sorted(os.listdir(path))
     files = [i for i in things if not os.path.isdir(path + "/" + i)]
     folders = [i for i in things if os.path.isdir(path + "/" + i)]
     if allowed:
-        path = path.replace("/home/elie/Documents", "allowed")
-        parent = parent.replace("/home/elie/Documents", "allowed")
-    with open("/home/elie/pythonprojects/website/app/usbadistance/a.html", "r") as file:
+        path = path.replace("/home/eolien55/Documents", "allowed")
+        parent = parent.replace("/home/eolien55/Documents", "allowed")
+    with open("/home/eolien55/pythonprojects/website/app/usbadistance/a.html", "r") as file:
         return flask.render_template_string(
             file.read(), parent=parent, files=files, folders=folders, path=path
         )
@@ -113,14 +113,14 @@ def imma_upload_ur_mother(prevfile=""):
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             return flask.redirect(f"/files/path/{prevfile}")
     return open(
-        "/home/elie/pythonprojects/website/app/usbadistance/add.html", "r"
+        "/home/eolien55/pythonprojects/website/app/usbadistance/add.html", "r"
     ).read() % ("files/path/" + prevfile,)
 
 
 @app.route("/files/")
 def welcome():
     return open(
-        "/home/elie/pythonprojects/website/app/usbadistance/welcome.html", "r"
+        "/home/eolien55/pythonprojects/website/app/usbadistance/welcome.html", "r"
     ).read()
 
 
@@ -136,7 +136,7 @@ def log_in():
         iplist.update({ip: 0})
     if iplist[ip] >= 4:
         file = open(
-            "/home/elie/pythonprojects/website/app/usbadistance/too_much_tries.html",
+            "/home/eolien55/pythonprojects/website/app/usbadistance/too_much_tries.html",
             "r",
         )
         file_con = file.read()
@@ -144,7 +144,7 @@ def log_in():
         return file_con  # Page d'erreur
     if flask.request.method == "GET":
         file = open(
-            "/home/elie/pythonprojects/website/app/usbadistance/login.html", "r"
+            "/home/eolien55/pythonprojects/website/app/usbadistance/login.html", "r"
         )
         file_con = file.read()
         file.close()
@@ -171,7 +171,7 @@ def logout():
 def imgfile(string):
     try:
         return flask.send_file(
-            r"/home/elie/pythonprojects/website/app/templates/usb/" + string
+            r"/home/eolien55/pythonprojects/website/app/templates/usb/" + string
         )
     except FileNotFoundError:
         return ""
@@ -183,12 +183,12 @@ def imgfile(string):
 def about():
     projects = eval(
         open(
-            "/home/elie/pythonprojects/website/app/templates/about/database.json", "r"
+            "/home/eolien55/pythonprojects/website/app/templates/about/database.json", "r"
         ).read()
     )
     return flask.render_template_string(
         open(
-            "/home/elie/pythonprojects/website/app/templates/about/about.html", "r"
+            "/home/eolien55/pythonprojects/website/app/templates/about/about.html", "r"
         ).read(),
         projects=projects,
         cont=0,
@@ -199,19 +199,19 @@ def about():
 def project(pk):
     thisproject = eval(
         open(
-            "/home/elie/pythonprojects/website/app/templates/about/database.json", "r"
+            "/home/eolien55/pythonprojects/website/app/templates/about/database.json", "r"
         ).read()
     )[1][pk - 1]
     if isinstance(thisproject["longdescription"], list):
         projects = eval(
             open(
-                "/home/elie/pythonprojects/website/app/templates/about/database.json",
+                "/home/eolien55/pythonprojects/website/app/templates/about/database.json",
                 "r",
             ).read()
         )
         return flask.render_template_string(
             open(
-                "/home/elie/pythonprojects/website/app/templates/about/about.html",
+                "/home/eolien55/pythonprojects/website/app/templates/about/about.html",
                 "r",
             ).read(),
             projects=projects,
@@ -219,7 +219,7 @@ def project(pk):
         )
     return flask.render_template_string(
         open(
-            "/home/elie/pythonprojects/website/app/templates/about/projects.html",
+            "/home/eolien55/pythonprojects/website/app/templates/about/projects.html",
             "r",
         ).read(),
         project=thisproject,
@@ -231,7 +231,7 @@ def project(pk):
 ############################################ PAGE DE BASE ############################################
 @app.route("/")
 def welcomehere():
-    with open("/home/elie/pythonprojects/website/app/welcome.html", "r") as file:
+    with open("/home/eolien55/pythonprojects/website/app/welcome.html", "r") as file:
         return flask.render_template_string(
             file.read(),
             background="#181a1b",
@@ -245,9 +245,9 @@ def welcomehere():
 @app.errorhandler(HTTPException)
 def error(err):
     err = err.code
-    with open("/home/elie/pythonprojects/website/app/errors.json", "r") as file:
+    with open("/home/eolien55/pythonprojects/website/app/errors.json", "r") as file:
         errors = flask.json.loads(file.read())
-    with open("/home/elie/pythonprojects/website/app/error.html", "r") as file:
+    with open("/home/eolien55/pythonprojects/website/app/error.html", "r") as file:
         return (
             flask.render_template_string(
                 file.read(),

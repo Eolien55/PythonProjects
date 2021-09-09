@@ -1,4 +1,4 @@
 #! /bin/bash
-sudo nginx -c /home/elie/pythonprojects/website/conf/nginx.conf
-cd /home/elie/pythonprojects
-gunicorn -b 127.0.0.1:5000 website:app &> /home/elie/pythonprojects/website/app/logs.log &
+sudo nginx -c /home/eolien55/pythonprojects/website/conf/nginx.conf
+cd /home/eolien55/pythonprojects
+sudo gunicorn -b 127.0.0.1:5000 website:app &> /home/eolien55/pythonprojects/website/app/logs.log &
